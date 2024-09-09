@@ -14,7 +14,7 @@
 
 ### Installation
 
-To install Chukti globally, run:
+To install Chukti globally, run
 
 ```bash
 npm install -g chukti
