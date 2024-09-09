@@ -4,6 +4,9 @@
   "description": "A library designed to simplify the smart contracts testing using human-readable syntax",
   "author": "Sohab Sk",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/ITZSHOAIB/chukti"
+  },
   "type": "module",
   "bin": {
     "chukti": "dist/internal/cli/index.cjs"
@@ -33,8 +36,10 @@
     "start": "ts-node src/internal/cli/index.ts",
     "postbuild": "node ./scripts/postbuild.js",
     "build:local": "pnpm build && pnpm link --global",
-    "build": "pnpm clean && tsup --config tsup.config.ts",
+    "build": "pnpm lint && pnpm clean && tsup --config tsup.config.ts",
     "clean": "rimraf dist",
+    "changeset:version": "changeset version",
+    "changeset:publish": "pnpm build && changeset publish",
     "lint": "tsc"
   },
   "dependencies": {
