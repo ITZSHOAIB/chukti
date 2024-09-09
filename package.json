@@ -7,6 +7,9 @@
   "repository": {
     "url": "https://github.com/ITZSHOAIB/chukti"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "bin": {
     "chukti": "dist/internal/cli/index.cjs"
