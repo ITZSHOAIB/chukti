@@ -1,7 +1,7 @@
 {
   "name": "chukti",
-  "version": "1.0.0",
-  "description": "CLI to generate smart contract test suite creation with deploy scripts and test cases automatically",
+  "version": "0.0.0",
+  "description": "A library designed to simplify the smart contracts testing using human-readable syntax",
   "author": "Sohab Sk",
   "license": "MIT",
   "type": "module",
@@ -32,9 +32,10 @@
   "scripts": {
     "start": "ts-node src/internal/cli/index.ts",
     "postbuild": "node ./scripts/postbuild.js",
-    "build:link": "pnpm build && pnpm link --global",
+    "build:local": "pnpm build && pnpm link --global",
     "build": "pnpm clean && tsup --config tsup.config.ts",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "lint": "tsc"
   },
   "dependencies": {
     "chai": "^5.1.1",
@@ -47,6 +48,7 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.8",
     "@types/chai": "^4.3.19",
     "@types/command-exists": "^1.2.3",
     "@types/fs-extra": "^11.0.4",
