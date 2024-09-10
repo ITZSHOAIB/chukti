@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.3
+
+### Patch Changes
+
+- 33a53a6: Adding deploy step definition and reporting tool
+
 ## 0.0.2
 
 ### Patch Changes
