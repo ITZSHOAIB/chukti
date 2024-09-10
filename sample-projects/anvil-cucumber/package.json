@@ -2,7 +2,7 @@
   "name": "chukti-project",
   "type": "module",
   "scripts": {
-    "test:cucumber": "cucumber-js"
+    "test": "chukti test"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^11.0.0",

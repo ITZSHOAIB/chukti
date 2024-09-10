@@ -69,15 +69,14 @@
   },
   "files": [
     "dist",
-    "sample-projects",
-    "templates"
+    "sample-projects"
   ],
   "keywords": [
-    "hardhat",
+    "Smart contract test",
     "viem",
     "cli",
-    "deploy",
     "test",
-    "smart contract"
+    "smart contract",
+    "Smart contract cucumber"
   ]
 }
