@@ -5,13 +5,13 @@ import { log } from "../internal/utils/logger.js";
 let anvilProcess: any;
 
 export const beforeAll = async () => {
-  log("info", "Starting test environment...");
+  log("info", "🚀 Starting test environment...");
 
   const forgeExist = commandExists.sync("forge");
   if (!forgeExist) {
     log(
       "error",
-      "Forge is not installed. Please install it first. Please refer to the documentation for more information.\n\nhttps://github.com/ITZSHOAIB/chukti#readme"
+      "❌ Forge is not installed. Please install it first. Please refer to the documentation for more information.\n\nhttps://github.com/ITZSHOAIB/chukti#readme"
     );
   }
 
@@ -21,7 +21,7 @@ export const beforeAll = async () => {
   if (!isAnvilExist) {
     log(
       "error",
-      "Anvil is not installed. Please install it first. Please refer to the documentation for more information.\n\nhttps://github.com/ITZSHOAIB/chukti#readme"
+      "❌ Anvil is not installed. Please install it first. Please refer to the documentation for more information.\n\nhttps://github.com/ITZSHOAIB/chukti#readme"
     );
     process.exit(1);
   }
@@ -48,12 +48,15 @@ export const beforeAll = async () => {
         stderr += data.toString();
         log(
           "error",
-          `Error while starting Local blockchain anvil:
+          `❌ Error while starting Local blockchain anvil:
           stdout: ${stdio}
           stderr: ${stderr}`
         );
         if (retries > 0) {
-          log("info", `Retrying to start anvil... (${retries} retries left)`);
+          log(
+            "info",
+            `🔄 Retrying to start anvil... (${retries} retries left)`
+          );
           setTimeout(
             () =>
               startAnvil(retries - 1, delay * 2)

@@ -2,6 +2,7 @@
   "default": {
     "paths": ["features/*.feature"],
     "import": ["features/support/*.ts"],
-    "loader": ["ts-node/esm"]
+    "loader": ["ts-node/esm"],
+    "format": ["html:cucumber-report.html"]
   }
 }
