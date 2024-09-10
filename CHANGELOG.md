@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.2
+
+### Patch Changes
+
+- 0761cb6: Fixed project initialization and updated Foundry installation steps
+
 ## 0.0.1
 
 ### Patch Changes
