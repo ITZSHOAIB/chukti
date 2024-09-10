@@ -12,17 +12,40 @@
 
 ## Getting Started
 
-### Installation
+## prerequisites (Foundry)
 
-To install Chukti globally, run
+Chukti uses [Anvil](https://book.getfoundry.sh/reference/anvil/) and [Forge](https://book.getfoundry.sh/forge/) for local blockchain operations. To get started, you need to have [Foundry](https://book.getfoundry.sh/) installed on your machine. Foundry includes tools like Forge (for building smart contracts) and Anvil (a local Ethereum node).
 
-```bash
-npm install -g chukti
-```
+### Installing Foundry
+
+1.  **Install Foundryup**: Foundryup is a tool to install and manage Foundry. Run the following command in your terminal to install Foundryup:
+
+    ```bash
+    curl -L https://foundry.paradigm.xyz | bash
+    ```
+
+2.  **Initialize Foundry**: After installing Foundryup, you need to initialize Foundry by running:
+
+    ```bash
+    foundryup
+    ```
+
+3.  **Verify Installation**: Ensure that Forge and Anvil are installed correctly by running:
+
+        ```bash
+        forge --version
+        anvil --version
+        ```
+
+    Once Foundry is installed, you can proceed with initializing a new project using Chukti.
 
 ### Initializing a New Project
 
-Create a new project with Chukti and Cucumber:
+To create a new project with Chukti and Cucumber:
+
+- create an empty folder first
+- cd into that folder
+- Then run either of the below commands:
 
 ```bash
 chukti init
@@ -35,6 +58,14 @@ npx chukti init
 ```
 
 This command sets up a new project with all the necessary configurations and dependencies.
+
+### Install chukti globally
+
+To install Chukti globally, run
+
+```bash
+npm install -g chukti
+```
 
 ### Writing Tests
 
