@@ -37,7 +37,6 @@
   },
   "scripts": {
     "start": "ts-node src/internal/cli/index.ts",
-    "postbuild": "node ./scripts/postbuild.js",
     "build:local": "pnpm build && pnpm link --global",
     "build": "pnpm lint && pnpm clean && tsup --config tsup.config.ts",
     "clean": "rimraf dist",

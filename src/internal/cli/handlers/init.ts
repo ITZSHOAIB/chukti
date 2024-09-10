@@ -23,7 +23,7 @@ const proceedWithInitialization = async () => {
   const currentDir = process.cwd();
   const templateDir = path.join(
     __dirname,
-    "../../../sample-projects/anvil-cucumber"
+    "../../../../sample-projects/anvil-cucumber"
   );
 
   // Copy the template files to the current directory
@@ -36,4 +36,6 @@ const proceedWithInitialization = async () => {
   console.log(kleur.yellow("📦 Installing dependencies..."));
   const { execa } = await import("execa");
   await execa("npm", ["install"], { stdio: "inherit" });
+  console.log(kleur.yellow("📦 Installing chukti..."));
+  await execa("npm", ["install", "-D", "chukti"], { stdio: "inherit" });
 };
