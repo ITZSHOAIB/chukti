@@ -1,20 +1,17 @@
-import kleur from "kleur";
 import path from "path";
 import fs from "fs-extra";
 import { checkChuktiProject } from "../utils/helpers.js";
+import { log } from "../../utils/logger.js";
+import { execSync } from "child_process";
 
 export const initProject = async () => {
   try {
-    console.log(
-      kleur.cyan("🚀 Initializing a new Chukti project with Cucumber, Anvil")
-    );
+    log("info", "🚀 Initializing a new Chukti project with Cucumber, Anvil");
 
     checkChuktiProject({ shouldExist: false });
     await proceedWithInitialization();
   } catch (error) {
-    console.error(
-      kleur.red(`❌ Error during initialization: ${(error as Error).message}`)
-    );
+    log("error", `❌ Error during initialization: ${(error as Error).message}`);
     process.exit(1);
   }
 };
@@ -27,15 +24,15 @@ const proceedWithInitialization = async () => {
   );
 
   // Copy the template files to the current directory
-  console.log(kleur.cyan("📁 Copying template files..."));
+  log("info", "📁 Copying template files...");
   fs.copySync(templateDir, currentDir);
 
-  console.log(kleur.green("✅ Project initialized successfully"));
+  log("sucess", "✅ Project initialized successfully");
 
   // Install the dependencies
-  console.log(kleur.yellow("📦 Installing dependencies..."));
-  const { execa } = await import("execa");
-  await execa("npm", ["install"], { stdio: "inherit" });
-  console.log(kleur.yellow("📦 Installing chukti..."));
-  await execa("npm", ["install", "-D", "chukti"], { stdio: "inherit" });
+  log("info", "📦 Installing dependencies...");
+  execSync("npm install", { stdio: "inherit" });
+  log("info", "📦 Installing chukti...");
+  execSync("npm install -D chukti", { stdio: "inherit" });
+  log("sucess", "✅ Dependencies installed successfully");
 };

@@ -1,14 +1,28 @@
-import { spawn } from "child_process";
+import { execSync, spawn } from "child_process";
 import commandExists from "command-exists";
+import { log } from "../internal/utils/logger.js";
 
 let anvilProcess: any;
 
 export const beforeAll = async () => {
-  console.log("Starting test environment...");
+  log("info", "🚀 Starting test environment...");
+
+  const forgeExist = commandExists.sync("forge");
+  if (!forgeExist) {
+    log(
+      "error",
+      "❌ Forge is not installed. Please install it first. Please refer to the documentation for more information.\n\nhttps://github.com/ITZSHOAIB/chukti#readme"
+    );
+  }
+
+  execSync("forge build", { stdio: "inherit" });
 
   const isAnvilExist = commandExists.sync("anvil");
   if (!isAnvilExist) {
-    console.error("Anvil is not installed. Please install it first.");
+    log(
+      "error",
+      "❌ Anvil is not installed. Please install it first. Please refer to the documentation for more information.\n\nhttps://github.com/ITZSHOAIB/chukti#readme"
+    );
     process.exit(1);
   }
 
@@ -32,11 +46,17 @@ export const beforeAll = async () => {
 
       const onError = (data: any) => {
         stderr += data.toString();
-        console.error(`Error while starting Local blockchain anvil:
+        log(
+          "error",
+          `❌ Error while starting Local blockchain anvil:
           stdout: ${stdio}
-          stderr: ${stderr}`);
+          stderr: ${stderr}`
+        );
         if (retries > 0) {
-          console.log(`Retrying to start anvil... (${retries} retries left)`);
+          log(
+            "info",
+            `🔄 Retrying to start anvil... (${retries} retries left)`
+          );
           setTimeout(
             () =>
               startAnvil(retries - 1, delay * 2)
@@ -51,7 +71,7 @@ export const beforeAll = async () => {
       };
 
       const onClose = () => {
-        console.log(`Local blockchain exited`);
+        log("info", "Local blockchain exited");
       };
 
       const cleanup = () => {
@@ -71,5 +91,5 @@ export const beforeAll = async () => {
 
 export const afterAll = () => {
   anvilProcess.kill();
-  console.log("Local blockchain stopped");
+  log("info", "Local blockchain stopped");
 };

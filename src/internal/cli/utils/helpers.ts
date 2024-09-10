@@ -1,6 +1,6 @@
 import fs from "fs-extra";
-import kleur from "kleur";
 import path from "path";
+import { log } from "../../utils/logger.js";
 
 export const checkChuktiProject = ({
   shouldExist,
@@ -12,23 +12,20 @@ export const checkChuktiProject = ({
   const projectExists = fs.existsSync(chuktiConfigPath);
 
   if (shouldExist && !projectExists) {
-    console.error(
-      kleur.red(
-        "❌ Error: A Chukti project does not exist in this directory.\n\n"
-      ) +
-        kleur.yellow(
-          `\tPlease run ${kleur
-            .magenta()
-            .bold("`chukti init`")} to initialize a new project.`
-        )
+    log(
+      "error",
+      "❌ Error: A Chukti project does not exist in this directory.\n\nPlease run `chukti init` to initialize a new project."
     );
+
     process.exit(1);
   }
 
   if (!shouldExist && projectExists) {
-    console.error(
-      kleur.red("❌ Error: A Chukti project already exists in this directory.")
+    log(
+      "error",
+      "❌ Error: A Chukti project already exists in this directory."
     );
+
     process.exit(1);
   }
 };
@@ -38,12 +35,12 @@ export const checkEveryPathExists = (paths: string[]) => {
 
   for (const p of paths) {
     if (!fs.existsSync(p)) {
-      errorMessages.push(`❌ Error: ${kleur.cyan(p)} does not exist.`);
+      errorMessages.push(`❌ Error: ${p} does not exist.`);
     }
   }
 
   if (errorMessages.length > 0) {
-    console.error(kleur.red(errorMessages.join("\n")));
+    log("error", errorMessages.join("\n"));
     process.exit(1);
   }
 };

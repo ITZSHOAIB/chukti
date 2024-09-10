@@ -37,7 +37,9 @@ Chukti uses [Anvil](https://book.getfoundry.sh/reference/anvil/) and [Forge](htt
         anvil --version
         ```
 
-    Once Foundry is installed, you can proceed with initializing a new project using Chukti.
+Once Foundry is installed, you can proceed with initializing a new project using Chukti.
+
+For Windows machines follow this: https://book.getfoundry.sh/getting-started/installation#prerequisites
 
 ### Initializing a New Project
 
@@ -94,5 +96,13 @@ Check out the sample-projects/anvil-cucumber directory for a complete example pr
 ## Acknowledgements
 
 Special thanks to the developers and contributors of Viem, Forge, Anvil and Cucumber for their amazing tools and libraries.
+
+## License
+
+Chukti is licensed under the MIT License. If you have any suggestions, bug reports, or feature requests, feel free to open an issue or submit a pull request. Your feedback is always welcome!
+
+## Contributing
+
+We welcome contributions from the community! If you have any ideas or suggestions, please open an issue or a pull request.
 
 Happy Testing! 🚀
