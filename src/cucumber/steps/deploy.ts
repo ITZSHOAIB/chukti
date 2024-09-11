@@ -46,7 +46,7 @@ export const deployContract = async function (
   });
 
   log(
-    "sucess",
+    "success",
     `✅ Deployed contract ${contractName}.sol with hash ${transactionHash}`
   );
 };

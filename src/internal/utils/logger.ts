@@ -1,22 +1,30 @@
 import kleur from "kleur";
 
-type LogType = "sucess" | "error" | "warning" | "info";
+type LogType = "success" | "error" | "warning" | "info";
 
 export const log = (type: LogType, message: string) => {
+  const formattedMessage = message.replace(/(https?:\/\/[^\s]+)/g, (url) =>
+    makeUrlClickable(url)
+  );
+
   switch (type) {
-    case "sucess":
-      console.log(kleur.green(message));
+    case "success":
+      console.log(kleur.green(formattedMessage));
       break;
     case "error":
-      console.error(kleur.red(message));
+      console.error(kleur.red(formattedMessage));
       break;
     case "warning":
-      console.warn(kleur.yellow(message));
+      console.warn(kleur.yellow(formattedMessage));
       break;
     case "info":
-      console.info(kleur.cyan(message));
+      console.info(kleur.cyan(formattedMessage));
       break;
     default:
-      console.log(message);
+      console.log(formattedMessage);
   }
+};
+
+const makeUrlClickable = (url: string) => {
+  return `\u001b]8;;${url}\u001b\\${url}\u001b]8;;\u001b\\`;
 };
