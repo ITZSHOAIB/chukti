@@ -1,8 +1,8 @@
 {
   "default": {
     "paths": ["features/*.feature"],
-    "import": ["features/support/*.ts"],
+    "import": ["chukti/support/*.ts"],
     "loader": ["ts-node/esm"],
-    "format": ["html:cucumber-report.html"]
+    "format": ["summary", "html:test-reports/test-report.html"]
   }
 }

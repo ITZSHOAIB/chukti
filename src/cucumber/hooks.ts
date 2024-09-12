@@ -9,8 +9,8 @@ export const beforeAll = async () => {
   try {
     log("info", "🚀 Starting test environment...");
 
-    const forgeExist = commandExists.sync("forge");
-    if (!forgeExist) {
+    const isForgeExist = commandExists.sync("forge");
+    if (!isForgeExist) {
       throw new CustomError(
         "Forge is not installed. Please install it first. Refer to the documentation: https://github.com/ITZSHOAIB/chukti#readme"
       );
@@ -34,10 +34,8 @@ export const beforeAll = async () => {
 export const afterAll = () => {
   if (anvilProcess) {
     anvilProcess.kill();
-    anvilProcess.stdout.removeAllListeners();
-    anvilProcess.stderr.removeAllListeners();
-    anvilProcess.removeAllListeners();
-    log("info", "Local blockchain stopped");
+    cleanupListeners();
+    log("info", "Local blockchain (Anvil) stopped");
   }
 };
 
@@ -52,46 +50,64 @@ const startAnvil = async (
       let stdio = "";
       let stderr = "";
 
-      anvilProcess.stdout.on("data", (data: Buffer) => {
+      const onData = (data: Buffer) => {
         stdio += data.toString();
         if (stdio.includes("Listening on")) {
-          log("success", "✅ Anvil started successfully");
+          log("success", "🚀 Local blockchain (Anvil) started successfully");
+          cleanupListeners();
           return;
         }
-      });
+      };
 
-      anvilProcess.stderr.on("data", (data: Buffer) => {
+      const onError = (data: Buffer) => {
         stderr += data.toString();
-      });
+      };
 
-      anvilProcess.on("close", (code: number) => {
+      const onClose = (code: number) => {
         if (code !== 0) {
           throw new CustomError(
-            `Anvil process exited with code ${code}: ${stderr}`
+            `Local blockchain (Anvil) process exited with code ${code}: ${stderr}`
           );
         }
-      });
+      };
 
+      anvilProcess.stdout.on("data", onData);
+      anvilProcess.stderr.on("data", onError);
+      anvilProcess.on("close", onClose);
+
+      // Wait for a short period to see if Anvil starts successfully
       await new Promise((resolve) => setTimeout(resolve, delay));
 
       if (stdio.includes("Listening on")) {
         return;
       } else {
-        throw new CustomError("Anvil did not start successfully");
+        throw new CustomError(
+          "Local blockchain (Anvil) did not start successfully"
+        );
       }
     } catch (error) {
       log(
         "warning",
-        `⚠️ Attempt ${attempt} to start Anvil failed: ${
+        `⚠️ Attempt ${attempt} to start Local blockchain (Anvil) failed: ${
           (error as Error).message
         }`
       );
       if (attempt === retries) {
         handleError(
-          new CustomError(`Failed to start Anvil after ${retries} attempts`)
+          new CustomError(
+            `Failed to start Local blockchain (Anvil) after ${retries} attempts`
+          )
         );
       }
       await new Promise((resolve) => setTimeout(resolve, delay));
     }
+  }
+};
+
+const cleanupListeners = () => {
+  if (anvilProcess) {
+    anvilProcess.stdout.removeAllListeners();
+    anvilProcess.stderr.removeAllListeners();
+    anvilProcess.removeAllListeners();
   }
 };
