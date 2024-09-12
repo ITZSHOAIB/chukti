@@ -7,17 +7,23 @@ import {
 } from "viem";
 import { anvil } from "viem/chains";
 import fs from "fs-extra";
-import { log } from "../../internal/utils/logger.js";
+import { world } from "@cucumber/cucumber";
 
-export const deployContract = async function (
-  contractName: string,
-  args: string,
-  amount: string
-) {
+export const registerContractName = (contractName: string) => {
   if (contractName.toLowerCase().includes(".sol")) {
     contractName = contractName.split(".sol")[0];
   }
+  world.contractName = contractName;
 
+  world.log(`Contract name registered: ${contractName}.sol`);
+};
+
+export const deployContract = async function (args: string, amount: string) {
+  if (!world?.contractName) {
+    throw new Error("❌ Contract name is not registered");
+  }
+
+  const contractName = world.contractName;
   const compiledContractPath = `out/${contractName}.sol/${contractName}.json`;
 
   if (!fs.existsSync(compiledContractPath)) {
@@ -45,8 +51,20 @@ export const deployContract = async function (
     value: BigInt(amount),
   });
 
-  log(
-    "sucess",
-    `✅ Deployed contract ${contractName}.sol with hash ${transactionHash}`
+  world.log(
+    `Contract deployment initiated. Transaction hash: ${transactionHash}`
   );
+
+  const transactionReceipt = await testClient.waitForTransactionReceipt({
+    hash: transactionHash,
+  });
+
+  if (transactionReceipt.status === "success") {
+    world.log(
+      `Contract deployed successfully at: ${transactionReceipt.contractAddress}`
+    );
+    world.contractAddress = transactionReceipt.contractAddress;
+  } else {
+    throw new Error(`❌ Contract deployment failed for ${contractName}.sol`);
+  }
 };

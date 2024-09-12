@@ -8,3 +8,5 @@ Try running some of the following tasks:
 chukti --help
 chukti test
 ```
+
+Check out the generate test report after running test from test-reports folder.

@@ -1,13 +1,18 @@
 import { execSync } from "child_process";
 import { log } from "../../utils/logger.js";
+import { CustomError, handleError } from "../../utils/errorHandler.js";
 
 export const runTests = async () => {
   try {
     log("info", "🚀 Running Cucumber tests...");
     execSync("npx cucumber-js", { stdio: "inherit" });
-    log("sucess", "✅ Tests completed successfully");
+    log(
+      "success",
+      "✅ Tests completed successfully. \n\n\tCheck out the report at test-reports/test-report.html"
+    );
   } catch (error) {
-    log("error", `❌ Error during tests: ${(error as Error).message}`);
-    process.exit(1);
+    handleError(
+      new CustomError(`Error before running tests: ${(error as Error).message}`)
+    );
   }
 };
