@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.4
+
+### Patch Changes
+
+- b174f66: complete deployment steps and improved Anvil hooks
+
 ## 0.0.3
 
 ### Patch Changes
