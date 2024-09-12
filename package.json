@@ -1,6 +1,6 @@
 {
   "name": "chukti",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A library designed to simplify the smart contracts testing using human-readable syntax",
   "author": "Sohab Sk",
   "license": "MIT",
