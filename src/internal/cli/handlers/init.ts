@@ -21,7 +21,7 @@ const proceedWithInitialization = async () => {
     const currentDir = process.cwd();
     const templateDir = path.join(
       __dirname,
-      "../../../../sample-projects/anvil-cucumber"
+      "../../../../sample-projects/hardhat-viem"
     );
 
     // Copy the template files to the current directory

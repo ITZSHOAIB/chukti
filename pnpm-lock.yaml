@@ -23,6 +23,9 @@ dependencies:
   kleur:
     specifier: ^4.1.5
     version: 4.1.5
+  tree-kill:
+    specifier: ^1.2.2
+    version: 1.2.2
   ts-node:
     specifier: ^10.9.2
     version: 10.9.2(@types/node@20.16.4)(typescript@5.5.4)
@@ -2588,7 +2591,6 @@ packages:
   /tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
-    dev: true
 
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}

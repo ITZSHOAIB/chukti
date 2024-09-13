@@ -1,113 +1,121 @@
-import { execSync, spawn } from "child_process";
+import { execSync, spawn, SpawnOptionsWithoutStdio } from "child_process";
 import commandExists from "command-exists";
 import { log } from "../internal/utils/logger.js";
 import { CustomError, handleError } from "../internal/utils/errorHandler.js";
+import kill from "tree-kill";
 
-let anvilProcess: any;
+let blockchainProcess: any = null;
+const serverConfirmationMessage =
+  "Started HTTP and WebSocket JSON-RPC server at";
 
 export const beforeAll = async () => {
   try {
     log("info", "🚀 Starting test environment...");
 
-    const isForgeExist = commandExists.sync("forge");
-    if (!isForgeExist) {
+    const isWindows = process.platform === "win32";
+
+    const isNpxExist = commandExists.sync("npx");
+    if (!isNpxExist) {
       throw new CustomError(
-        "Forge is not installed. Please install it first. Refer to the documentation: https://github.com/ITZSHOAIB/chukti#readme"
+        "npx command not found. Please install Node.js to get npx. Refer to the documentation: https://nodejs.org/en/download/"
       );
     }
 
-    execSync("forge build", { stdio: "inherit" });
+    const npxPath = isWindows
+      ? "npx.cmd"
+      : execSync("which npx").toString().trim();
 
-    const isAnvilExist = commandExists.sync("anvil");
-    if (!isAnvilExist) {
-      throw new CustomError(
-        "Anvil is not installed. Please install it first. Refer to the documentation: https://github.com/ITZSHOAIB/chukti#readme"
-      );
-    }
+    execSync(`${npxPath} hardhat compile`, { stdio: "inherit" });
 
-    await startAnvil();
+    const args = ["hardhat", "node"];
+    const options: SpawnOptionsWithoutStdio = {
+      cwd: process.cwd(),
+      env: {
+        ...process.env,
+        HARDHAT_EXPERIMENTAL_ALLOW_NON_LOCAL_INSTALLATION: "true",
+      },
+      stdio: "pipe",
+      shell: isWindows,
+    };
+
+    await startLocalBlockchain(npxPath, args, options);
   } catch (error) {
     handleError(error as Error);
   }
 };
 
 export const afterAll = () => {
-  if (anvilProcess) {
-    anvilProcess.kill();
-    cleanupListeners();
-    log("info", "Local blockchain (Anvil) stopped");
-  }
+  closeLocalBlockchain();
 };
 
-const startAnvil = async (
+const startLocalBlockchain = async (
+  spawnCommand: string,
+  args: string[],
+  options: SpawnOptionsWithoutStdio,
   retries: number = 5,
-  delay: number = 1000
+  delay: number = 30000
 ): Promise<void> => {
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    try {
-      anvilProcess = spawn("anvil", { stdio: "pipe" });
+  let blockchainStarted = false;
 
-      let stdio = "";
-      let stderr = "";
+  blockchainProcess = spawn(spawnCommand, args, options);
 
-      const onData = (data: Buffer) => {
-        stdio += data.toString();
-        if (stdio.includes("Listening on")) {
-          log("success", "🚀 Local blockchain (Anvil) started successfully");
-          cleanupListeners();
-          return;
-        }
-      };
+  let stdio = "";
+  let stderr = "";
 
-      const onError = (data: Buffer) => {
-        stderr += data.toString();
-      };
+  const onData = (data: Buffer) => {
+    stdio += data.toString();
+    if (stdio.includes(serverConfirmationMessage) && !blockchainStarted) {
+      log("success", "🚀 Local blockchain started successfully");
+      blockchainStarted = true;
+      cleanupListeners();
+    }
+  };
 
-      const onClose = (code: number) => {
-        if (code !== 0) {
-          throw new CustomError(
-            `Local blockchain (Anvil) process exited with code ${code}: ${stderr}`
-          );
-        }
-      };
+  const onError = (data: Buffer) => {
+    stderr += data.toString();
+  };
 
-      anvilProcess.stdout.on("data", onData);
-      anvilProcess.stderr.on("data", onError);
-      anvilProcess.on("close", onClose);
-
-      // Wait for a short period to see if Anvil starts successfully
-      await new Promise((resolve) => setTimeout(resolve, delay));
-
-      if (stdio.includes("Listening on")) {
-        return;
-      } else {
-        throw new CustomError(
-          "Local blockchain (Anvil) did not start successfully"
-        );
-      }
-    } catch (error) {
-      log(
-        "warning",
-        `⚠️ Attempt ${attempt} to start Local blockchain (Anvil) failed: ${
-          (error as Error).message
-        }`
+  const onClose = (code: number) => {
+    if (code !== 0) {
+      throw new CustomError(
+        `Local blockchain process exited with code ${code}: ${stderr}`
       );
-      if (attempt === retries) {
-        handleError(
-          new CustomError(
-            `Failed to start Local blockchain (Anvil) after ${retries} attempts`
-          )
-        );
-      }
+    }
+  };
+
+  blockchainProcess.stdout.on("data", onData);
+  blockchainProcess.stderr.on("data", onError);
+  blockchainProcess.on("close", onClose);
+  process.on("exit", () => {
+    closeLocalBlockchain();
+  });
+
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    if (blockchainStarted) {
+      break;
+    } else {
       await new Promise((resolve) => setTimeout(resolve, delay));
+      log(
+        "info",
+        `🚀 Starting Local Blockchain... Attempt ${attempt}/${retries}`
+      );
     }
   }
 };
 
 const cleanupListeners = () => {
-  if (anvilProcess) {
-    anvilProcess.stdout.removeAllListeners();
-    anvilProcess.stderr.removeAllListeners();
-    anvilProcess.removeAllListeners();
+  if (blockchainProcess) {
+    blockchainProcess.stdout?.removeAllListeners();
+    blockchainProcess.stderr?.removeAllListeners();
+    blockchainProcess.removeAllListeners();
+  }
+};
+
+const closeLocalBlockchain = () => {
+  if (blockchainProcess && !blockchainProcess.killed) {
+    kill(blockchainProcess.pid);
+    cleanupListeners();
+    blockchainProcess = null;
+    log("info", "Local blockchain stopped");
   }
 };

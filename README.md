@@ -10,9 +10,7 @@
 - `Automated Setup`: Quickly initialize new projects with a single command.
 - `Extensible`: Easily add custom step definitions to suit your project's needs and scale your project further.
 
-## Getting Started
-
-## prerequisites (Foundry)
+## Prerequisites for Foundry (Not required for hardhat: [skip](https://github.com/ITZSHOAIB/chukti?tab=readme-ov-file#getting-started))
 
 Chukti uses [Anvil](https://book.getfoundry.sh/reference/anvil/) and [Forge](https://book.getfoundry.sh/forge/) for local blockchain operations. To get started, you need to have [Foundry](https://book.getfoundry.sh/) installed on your machine. Foundry includes tools like Forge (for building smart contracts) and Anvil (a local Ethereum node).
 
@@ -40,6 +38,8 @@ Chukti uses [Anvil](https://book.getfoundry.sh/reference/anvil/) and [Forge](htt
 Once Foundry is installed, you can proceed with initializing a new project using Chukti.
 
 For Windows machines follow this: https://book.getfoundry.sh/getting-started/installation#prerequisites
+
+## Getting Started
 
 ### Initializing a New Project
 
