@@ -12,7 +12,7 @@
   },
   "type": "module",
   "bin": {
-    "chukti": "dist/internal/cli/index.cjs"
+    "chukti": "dist/internal/cli/index.js"
   },
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
@@ -41,10 +41,10 @@
   },
   "dependencies": {
     "@cucumber/cucumber": "^11.0.0",
-    "chai": "^5.1.1",
     "command-exists": "^1.2.9",
     "execa": "^9.3.1",
     "fs-extra": "^11.2.0",
+    "inquirer": "^10.2.2",
     "kleur": "^4.1.5",
     "tree-kill": "^1.2.2",
     "ts-node": "^10.9.2",
@@ -53,7 +53,6 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.8",
-    "@types/chai": "^4.3.19",
     "@types/command-exists": "^1.2.3",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.4.2",
