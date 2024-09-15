@@ -15,7 +15,7 @@ export class AnvilManager extends BlockchainManager {
 
       if (!commandExists.sync("forge")) {
         throw new CustomError(
-          "Forge not found. Please install it before running the tests. Refer to the documentation: https://github.com/ITZSHOAIB/chukti#readme"
+          "Forge not found. Please install it before running the tests. Refer to the documentation: https://book.getfoundry.sh/getting-started/installation#using-foundryup"
         );
       }
 
@@ -31,7 +31,7 @@ export class AnvilManager extends BlockchainManager {
 
     if (!commandExists.sync("anvil")) {
       throw new CustomError(
-        "Anvil not found. Please install it before running the tests. Refer to the documentation: https://github.com/ITZSHOAIB/chukti#readme"
+        "Anvil not found. Please install it before running the tests. Refer to the documentation: https://book.getfoundry.sh/getting-started/installation#using-foundryup"
       );
     }
 
