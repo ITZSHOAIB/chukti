@@ -8,8 +8,8 @@ import { runTests } from "./handlers/runTests.js";
 yargs(hideBin(process.argv))
   .scriptName("chukti")
   .command({
-    command: "init",
-    describe: "Initialize a new Chukti + Cucumber project",
+    command: "init [folderName]",
+    describe: "Initialize a new Chukti project",
     handler: initProject,
     aliases: ["i"],
   })

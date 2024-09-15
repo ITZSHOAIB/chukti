@@ -1,7 +1,7 @@
 {
   "default": {
-    "paths": ["features/*.feature"],
-    "import": ["chukti/support/*.ts"],
+    "paths": ["features/**/*.feature"],
+    "import": ["support/**/*.ts"],
     "loader": ["ts-node/esm"],
     "format": ["summary", "html:test-reports/test-report.html"]
   }

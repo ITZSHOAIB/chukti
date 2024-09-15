@@ -1,0 +1,12 @@
+{
+  "name": "chukti-project",
+  "scripts": {
+    "test": "chukti test"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.0.0",
+    "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+    "hardhat": "^2.22.10",
+    "ts-node": "^10.9.2"
+  }
+}

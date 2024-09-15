@@ -4,27 +4,54 @@ import {
   publicActions,
   walletActions,
   Abi,
+  TestClientConfig,
 } from "viem";
-import { anvil } from "viem/chains";
+import { anvil, hardhat } from "viem/chains";
 import fs from "fs-extra";
+import path from "path";
 import { world } from "@cucumber/cucumber";
+import assert from "assert";
+import { getProjectType } from "../../../internal/utils/projectConfig.js";
+import { ProjectType } from "../../../internal/types.js";
 
-export const registerContractName = (contractName: string) => {
-  if (contractName.toLowerCase().includes(".sol")) {
-    contractName = contractName.split(".sol")[0];
+export const verifyContractPath = function (contractPath: string) {
+  if (!contractPath.toLowerCase().includes(".sol")) {
+    contractPath = `${contractPath}.sol`;
   }
-  world.contractName = contractName;
 
-  world.log(`Contract name registered: ${contractName}.sol`);
+  if (!fs.existsSync(path.resolve(process.cwd(), contractPath))) {
+    throw new Error(`❌ Contract file not found at: ${contractPath}`);
+  }
+
+  world.contractPath = contractPath;
+  world.log(`Contract exists at: ${contractPath}`);
 };
 
 export const deployContract = async function (args: string, amount: string) {
-  if (!world?.contractName) {
-    throw new Error("❌ Contract name is not registered");
+  if (!world?.contractPath) {
+    throw new Error("❌ Contract path not set. Please set the contract path");
   }
 
-  const contractName = world.contractName;
-  const compiledContractPath = `out/${contractName}.sol/${contractName}.json`;
+  const projectType = getProjectType(process.cwd());
+  if (projectType === null) {
+    throw new Error("❌ No Chukti project found in the current directory.");
+  }
+
+  const contractPath = world.contractPath;
+  const contractName = path.basename(contractPath, ".sol");
+  let compiledContractPath: string = "";
+
+  if (projectType === ProjectType.HardhatViem) {
+    compiledContractPath = path.resolve(
+      process.cwd(),
+      `artifacts/${contractPath}/${contractName}.json`
+    );
+  } else if (projectType === ProjectType.ForgeAnvil) {
+    compiledContractPath = path.resolve(
+      process.cwd(),
+      `out/${contractName}.sol/${contractName}.json`
+    );
+  }
 
   if (!fs.existsSync(compiledContractPath)) {
     throw new Error(`❌ Contract ${contractName} not compiled correctly`);
@@ -32,10 +59,17 @@ export const deployContract = async function (args: string, amount: string) {
 
   const contract = fs.readJSONSync(compiledContractPath);
 
+  const testClientConfigOverride: Partial<TestClientConfig> = {};
+  if (projectType === ProjectType.ForgeAnvil) {
+    testClientConfigOverride.chain = anvil;
+    testClientConfigOverride.mode = "anvil";
+  }
+
   const testClient = createTestClient({
-    chain: anvil,
-    mode: "anvil",
+    chain: hardhat,
+    mode: "hardhat",
     transport: http(),
+    ...testClientConfigOverride,
   })
     .extend(publicActions)
     .extend(walletActions);
@@ -46,7 +80,10 @@ export const deployContract = async function (args: string, amount: string) {
   const transactionHash = await testClient.deployContract({
     abi: contract.abi as Abi,
     account: deployerAddress,
-    bytecode: contract.bytecode.object,
+    bytecode:
+      projectType === ProjectType.HardhatViem
+        ? contract.bytecode
+        : contract.bytecode.object,
     args: JSON.parse(args),
     value: BigInt(amount),
   });
@@ -59,12 +96,10 @@ export const deployContract = async function (args: string, amount: string) {
     hash: transactionHash,
   });
 
-  if (transactionReceipt.status === "success") {
-    world.log(
-      `Contract deployed successfully at: ${transactionReceipt.contractAddress}`
-    );
-    world.contractAddress = transactionReceipt.contractAddress;
-  } else {
-    throw new Error(`❌ Contract deployment failed for ${contractName}.sol`);
-  }
+  assert.strictEqual(transactionReceipt.status, "success");
+
+  world.log(
+    `Contract deployed successfully at: ${transactionReceipt.contractAddress}`
+  );
+  world.contractAddress = transactionReceipt.contractAddress;
 };
