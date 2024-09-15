@@ -1,7 +1,7 @@
 import { execSync, SpawnOptionsWithoutStdio } from "child_process";
 import { BlockchainManager } from "./BlockchainManager.js";
-import { log } from "../utils/logger.js";
-import { CustomError } from "../utils/errorHandler.js";
+import { log } from "../../internal/utils/logger.js";
+import { CustomError } from "../../internal/utils/errorHandler.js";
 import commandExists from "command-exists";
 
 export class AnvilManager extends BlockchainManager {

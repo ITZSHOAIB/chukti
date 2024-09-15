@@ -27,7 +27,17 @@
     "./cucumber": {
       "types": "./dist/cucumber/index.d.ts",
       "import": "./dist/cucumber/index.js",
-      "require": "./dist/cucumber/index.js"
+      "require": "./dist/cucumber/index.cjs"
+    },
+    "./local-blockchain": {
+      "types": "./dist/local-blockchain/index.d.ts",
+      "import": "./dist/local-blockchain/index.js",
+      "require": "./dist/local-blockchain/index.cjs"
+    },
+    "./viem": {
+      "types": "./dist/viem/index.d.ts",
+      "import": "./dist/viem/index.js",
+      "require": "./dist/viem/index.cjs"
     }
   },
   "scripts": {

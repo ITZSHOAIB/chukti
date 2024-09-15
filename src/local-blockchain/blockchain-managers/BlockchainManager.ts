@@ -1,6 +1,6 @@
 import { ChildProcess, SpawnOptions } from "child_process";
-import { log } from "../utils/logger.js";
-import { CustomError } from "../utils/errorHandler.js";
+import { log } from "../../internal/utils/logger.js";
+import { CustomError } from "../../internal/utils/errorHandler.js";
 import kill from "tree-kill";
 import spawn from "cross-spawn";
 
@@ -50,14 +50,14 @@ export abstract class BlockchainManager {
   public stopLocalBlockchain() {
     if (this.blockchainProcess) {
       kill(this.blockchainProcess.pid!);
-      this.cleanupListeners();
-      this.blockchainProcess.off("close", this.onClose);
+      this.cleanupDataListeners();
+      this.blockchainProcess.removeAllListeners();
       this.blockchainProcess = null;
       log("info", "Local blockchain stopped");
     }
   }
 
-  private cleanupListeners = () => {
+  private cleanupDataListeners = () => {
     if (this.blockchainProcess) {
       this.blockchainProcess.stdout?.off("data", this.onData);
       this.blockchainProcess.stderr?.off("data", this.onError);
@@ -76,7 +76,7 @@ export abstract class BlockchainManager {
     ) {
       log("success", "🚀 Local blockchain started successfully");
       this.blockchainStarted = true;
-      this.cleanupListeners();
+      this.cleanupDataListeners();
       resolve();
     }
   };
@@ -86,7 +86,8 @@ export abstract class BlockchainManager {
   };
 
   private onClose = (reject: (reason?: any) => void) => (code: number) => {
-    this.cleanupListeners();
+    this.cleanupDataListeners();
+    this.blockchainProcess?.removeAllListeners();
     if (code !== 0) {
       reject(
         new CustomError(

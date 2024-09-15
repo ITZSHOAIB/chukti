@@ -1,7 +1,7 @@
 import { log } from "../internal/utils/logger.js";
 import { CustomError, handleError } from "../internal/utils/errorHandler.js";
-import { HardhatManager } from "../internal/local-blockchain/HardhatManager.js";
-import { AnvilManager } from "../internal/local-blockchain/AnvilManager.js";
+import { HardhatManager } from "../local-blockchain/blockchain-managers/HardhatManager.js";
+import { AnvilManager } from "../local-blockchain/blockchain-managers/AnvilManager.js";
 import { getProjectType } from "../internal/utils/projectConfig.js";
 import { ProjectType } from "../internal/types.js";
 

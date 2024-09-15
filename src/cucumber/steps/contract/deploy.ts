@@ -14,7 +14,7 @@ import assert from "assert";
 import { getProjectType } from "../../../internal/utils/projectConfig.js";
 import { ProjectType } from "../../../internal/types.js";
 
-export const verifyContractPath = function (contractPath: string) {
+export const verifyContractPath = (contractPath: string) => {
   if (!contractPath.toLowerCase().includes(".sol")) {
     contractPath = `${contractPath}.sol`;
   }
@@ -27,7 +27,7 @@ export const verifyContractPath = function (contractPath: string) {
   world.log(`Contract exists at: ${contractPath}`);
 };
 
-export const deployContract = async function (args: string, amount: string) {
+export const deployContract = async (args: string, amount: string) => {
   if (!world?.contractPath) {
     throw new Error("❌ Contract path not set. Please set the contract path");
   }

@@ -1,3 +1,2 @@
-export * from "./steps/contract/deploy.js";
-export * from "./steps/contract/interaction.js";
-export * from "./hooks.js";
+export { deployContract, verifyContractPath } from "./steps/contract/deploy.js";
+export { beforeAll, afterAll } from "./hooks.js";
