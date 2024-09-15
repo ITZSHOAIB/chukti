@@ -1,8 +1,8 @@
-# Chukti (In Development...)
+# Chukti 🚀 (Crafting Phase)
 
 **Chukti** is a powerful library designed to simplify the process of testing smart contracts using Cucumber's human-readable Gherkin syntax. With Chukti, you can write end-to-end tests for your smart contracts in a language that everyone on your team can understand, from developers to non-technical stakeholders.
 
-## Features
+## Features ✨
 
 - `Human-Readable Tests`: Write tests in plain English using Gherkin syntax.
 - `Flexible Environment`: The initialized project can be later expaned with any other tool.
@@ -10,56 +10,78 @@
 - `Automated Setup`: Quickly initialize new projects with a single command.
 - `Extensible`: Easily add custom step definitions to suit your project's needs and scale your project further.
 
-## Prerequisites for Foundry (Not required for hardhat: [skip](https://github.com/ITZSHOAIB/chukti?tab=readme-ov-file#getting-started))
-
-Chukti uses [Anvil](https://book.getfoundry.sh/reference/anvil/) and [Forge](https://book.getfoundry.sh/forge/) for local blockchain operations. To get started, you need to have [Foundry](https://book.getfoundry.sh/) installed on your machine. Foundry includes tools like Forge (for building smart contracts) and Anvil (a local Ethereum node).
-
-### Installing Foundry
-
-1.  **Install Foundryup**: Foundryup is a tool to install and manage Foundry. Run the following command in your terminal to install Foundryup:
-
-    ```bash
-    curl -L https://foundry.paradigm.xyz | bash
-    ```
-
-2.  **Initialize Foundry**: After installing Foundryup, you need to initialize Foundry by running:
-
-    ```bash
-    foundryup
-    ```
-
-3.  **Verify Installation**: Ensure that Forge and Anvil are installed correctly by running:
-
-        ```bash
-        forge --version
-        anvil --version
-        ```
-
-Once Foundry is installed, you can proceed with initializing a new project using Chukti.
-
-For Windows machines follow this: https://book.getfoundry.sh/getting-started/installation#prerequisites
-
 ## Getting Started
 
-### Initializing a New Project
+Chukti supports both `Hardhat+Viem` and `Forge+Anvil` project setups. You can choose the type of project you want to initialize during the setup process. Afterwards the project can be customized and scaled accordingly.
 
-To create a new project with Chukti and Cucumber:
+### Initializing a New Project 🛠️
 
-- create an empty folder first
-- cd into that folder
-- Then run either of the below commands:
+To initialize a Chukti project, use the `npx chukti init` command. You can specify the directory name where you want to initialize the project. If you use `.` as the directory name, it will initialize in the current directory.
+
+- **Initialize**:
+
+  ```bash
+  npx chukti init
+  ```
+
+- **Initialize in the current directory**:
+
+  ```bash
+  npx chukti init .
+  ```
+
+- **Initialize in a new directory**:
+
+  ```bash
+  npx chukti init my-new-project
+  ```
+
+### Choosing Project Type
+
+During the initialization, you will be prompted to choose between the following project types:
 
 ```bash
-chukti init
+🚀 Initializing a new Chukti project with Cucumber
+? Choose your chukti project setup: (Use arrow keys)
+❯ A TypeScript project with Hardhat + Viem
+  A Typescript project with Forge + Anvil (should be installed manually)
 ```
 
-or
+### Confused? What to choose?
+
+- **Hardhat + Viem**:
+
+  - Rich Ecosystem: Extensive plugins and tools available.
+  - Easy Integration: Seamless integration with Viem for enhanced testing capabilities.
+  - Community Support: Large and active community for support and resources.
+  - Complexity: Can be more complex to set up and configure for beginners.
+  - Performance: Slightly slower compared to Forge in some scenarios.
+
+- **Forge + Anvil**:
+  - Performance: Faster execution and testing times.
+  - Simplicity: Easier to set up and use for simple projects.
+  - Lightweight: Minimal dependencies and overhead.
+  - Limited Ecosystem: Fewer plugins and tools compared to Hardhat.
+  - Manual Setup: Requires manual installation and configuration of Foundry tools.
+
+### Writing Tests
+
+Chukti allows you to write tests in Gherkin syntax. Here's an example:
+
+```feature
+Feature: Counter contract example
+    Scenario: deploy a contract with arguments
+        Given a contract at path "contracts/Counter.sol"
+        Then deploy the contract with "[10]" arguments and "0" Ether
+```
+
+### Running Tests
+
+To run your Cucumber tests, use the following command:
 
 ```bash
-npx chukti init
+npx chukti test
 ```
-
-This command sets up a new project with all the necessary configurations and dependencies.
 
 ### Install chukti globally
 
@@ -69,39 +91,19 @@ To install Chukti globally, run
 npm install -g chukti
 ```
 
-### Writing Tests
-
-Chukti allows you to write tests in Gherkin syntax. Here's an example:
-
-```feature
-Feature: Counter Contract
-    Scenario: Increment the counter
-        Given a deployed "Counter" contract
-        When I call the "increment" function
-        Then the "number" variable should be "1"
-```
-
-### Running Tests
-
-To run your Cucumber tests, use the following command:
-
-```bash
-chukti test
-```
-
 ## Example Project
 
-Check out the sample-projects/anvil-cucumber directory for a complete example project. It includes a sample contract (Counter.sol), feature files, and step definitions.
+Check out the sample-projects directory for a complete example project. It includes a sample contract (Counter.sol), feature files, and step definitions.
 
 ## Acknowledgements
 
-Special thanks to the developers and contributors of Viem, Forge, Anvil and Cucumber for their amazing tools and libraries.
+Special thanks to the developers and contributors of Viem, Forge, Anvil, Hardhat, and Cucumber for their amazing tools and libraries.
 
-## License
+## License 📜
 
 Chukti is licensed under the MIT License. If you have any suggestions, bug reports, or feature requests, feel free to open an issue or submit a pull request. Your feedback is always welcome!
 
-## Contributing
+## Contributing 🤝
 
 We welcome contributions from the community! If you have any ideas or suggestions, please open an issue or a pull request.
 

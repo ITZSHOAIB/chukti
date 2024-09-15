@@ -29,16 +29,13 @@ export const beforeAll = async () => {
         "Unsupported project type. Please check chukti.config.json"
       );
     }
-    console.log("before completed");
   } catch (error) {
     handleError(error as Error);
   }
 };
 
 export const afterAll = () => {
-  // closeLocalBlockchain();
   if (blockchainManager) {
     blockchainManager.stopLocalBlockchain();
   }
-  console.log("After completed");
 };

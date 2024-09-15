@@ -12,7 +12,7 @@ import {
   verifyContractPath,
 } from "chukti";
 
-setDefaultTimeout(150 * 1000);
+setDefaultTimeout(150 * 1_000);
 
 BeforeAll(beforeAll);
 AfterAll(afterAll);

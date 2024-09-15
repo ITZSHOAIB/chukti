@@ -9,4 +9,12 @@ chukti --help
 chukti test
 ```
 
-Check out the generate test report after running test from test-reports folder.
+## Test Reports
+
+After running the tests, you can check out the generated test reports in the [`test-reports`] folder.
+
+## Project Structure
+
+- `contracts/`: Contains the Solidity contracts.
+- `features/`: Contains the Cucumber feature files.
+- `support/`: Contains the step definitions and other support files.

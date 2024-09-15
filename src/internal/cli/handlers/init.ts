@@ -75,6 +75,10 @@ const proceedWithInitialization = async (
   projectPath: string
 ) => {
   try {
+    const commonFilesDir = path.join(
+      __dirname,
+      "../../../sample-projects/common"
+    );
     const templateDir = path.join(
       __dirname,
       `../../../sample-projects/${projectType.toLowerCase()}`
@@ -82,6 +86,7 @@ const proceedWithInitialization = async (
 
     // Copy the template files to the current directory
     log("info", "📁 Copying template files...");
+    fs.copySync(commonFilesDir, projectPath);
     fs.copySync(templateDir, projectPath);
 
     log("success", "✅ Project initialized successfully");

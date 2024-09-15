@@ -42,7 +42,7 @@
   "dependencies": {
     "@cucumber/cucumber": "^11.0.0",
     "command-exists": "^1.2.9",
-    "execa": "^9.3.1",
+    "cross-spawn": "^7.0.3",
     "fs-extra": "^11.2.0",
     "inquirer": "^10.2.2",
     "kleur": "^4.1.5",
@@ -54,11 +54,13 @@
   "devDependencies": {
     "@changesets/cli": "^2.27.8",
     "@types/command-exists": "^1.2.3",
+    "@types/cross-spawn": "^6.0.6",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.4.2",
     "@types/yargs": "^17.0.24",
     "glob": "^11.0.0",
     "rimraf": "^6.0.1",
+    "simple-git-hooks": "^2.11.1",
     "tslib": "^2.7.0",
     "tsup": "^8.2.4",
     "typescript": "^5.1.6"
@@ -69,10 +71,13 @@
   ],
   "keywords": [
     "Smart contract test",
-    "viem",
-    "cli",
-    "test",
-    "smart contract",
-    "Smart contract cucumber"
-  ]
+    "Smart contract test cucumber",
+    "Blockchain test",
+    "Smart contract",
+    "Smart contract cucumber",
+    "Hardhat cucumber"
+  ],
+  "simple-git-hooks": {
+    "pre-commit": "pnpm build"
+  }
 }

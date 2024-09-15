@@ -1,22 +1,20 @@
-import {
-  spawn,
-  ChildProcessWithoutNullStreams,
-  SpawnOptionsWithoutStdio,
-} from "child_process";
+import { ChildProcess, SpawnOptions } from "child_process";
 import { log } from "../utils/logger.js";
 import { CustomError } from "../utils/errorHandler.js";
 import kill from "tree-kill";
+import spawn from "cross-spawn";
 
 interface BlockchainManagerOptions {
   confirmationMessage: string;
 }
 
 export abstract class BlockchainManager {
-  private blockchainProcess: ChildProcessWithoutNullStreams | null = null;
+  private blockchainProcess: ChildProcess | null = null;
   private serverConfirmationMessage: string;
   private stdio = "";
   private stderr = "";
   private blockchainStarted = false;
+  private timeoutId: NodeJS.Timeout | null = null;
 
   constructor({ confirmationMessage }: BlockchainManagerOptions) {
     this.serverConfirmationMessage = confirmationMessage;
@@ -25,17 +23,18 @@ export abstract class BlockchainManager {
   public async startLocalBlockchain(
     spawnCommand: string,
     args: string[],
-    options: SpawnOptionsWithoutStdio,
+    options: SpawnOptions,
     timeout: number = 30_000
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       this.blockchainProcess = spawn(spawnCommand, args, options);
 
-      this.blockchainProcess.stdout.on("data", this.onData(resolve));
-      this.blockchainProcess.stderr.on("data", this.onError);
+      this.blockchainProcess.stdout?.on("data", this.onData(resolve));
+      this.blockchainProcess.stderr?.on("data", this.onError);
       this.blockchainProcess.on("close", this.onClose(reject));
+      process.on("exit", this.stopLocalBlockchain);
 
-      setTimeout(() => {
+      this.timeoutId = setTimeout(() => {
         if (!this.blockchainStarted) {
           this.stopLocalBlockchain();
           reject(
@@ -50,10 +49,7 @@ export abstract class BlockchainManager {
 
   public stopLocalBlockchain() {
     if (this.blockchainProcess) {
-      console.log("Killing process", this.blockchainProcess.killed);
-      if (!this.blockchainProcess.killed) {
-        kill(this.blockchainProcess.pid!);
-      }
+      kill(this.blockchainProcess.pid!);
       this.cleanupListeners();
       this.blockchainProcess.off("close", this.onClose);
       this.blockchainProcess = null;
@@ -63,8 +59,12 @@ export abstract class BlockchainManager {
 
   private cleanupListeners = () => {
     if (this.blockchainProcess) {
-      this.blockchainProcess.stdout.off("data", this.onData);
-      this.blockchainProcess.stderr.off("data", this.onError);
+      this.blockchainProcess.stdout?.off("data", this.onData);
+      this.blockchainProcess.stderr?.off("data", this.onError);
+    }
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
     }
   };
 
