@@ -3,11 +3,12 @@ import fs from "fs-extra";
 import { getProjectType } from "../../utils/projectConfig.js";
 import { log } from "../../utils/logger.js";
 import { execSync } from "child_process";
-import { handleError, CustomError } from "../../utils/errorHandler.js";
+import { handleError } from "../../utils/errorHandler.js";
 import inquirer from "inquirer";
 import { ArgumentsCamelCase } from "yargs";
 import { ProjectType } from "../../types.js";
 import { fileURLToPath } from "url";
+import { ERROR_MESSAGES } from "../../utils/errorMessages.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,9 +42,7 @@ export const initProject = async (argv: ArgumentsCamelCase) => {
     process.chdir(projectPath);
 
     if (getProjectType(projectPath)) {
-      throw new CustomError(
-        "A Chukti project already exists in this directory."
-      );
+      throw new Error(ERROR_MESSAGES.CHUKTI_PROJECT_ALREADY_EXISTS);
     }
 
     const { projectType } = await inquirer.prompt([
@@ -100,6 +99,6 @@ const proceedWithInitialization = async (
 
     log("success", "✅ Dependencies installed successfully");
   } catch (error) {
-    throw new CustomError((error as Error).message);
+    throw new Error((error as Error).message);
   }
 };

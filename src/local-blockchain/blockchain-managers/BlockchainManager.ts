@@ -1,6 +1,5 @@
 import { ChildProcess, SpawnOptions } from "child_process";
 import { log } from "../../internal/utils/logger.js";
-import { CustomError } from "../../internal/utils/errorHandler.js";
 import kill from "tree-kill";
 import spawn from "cross-spawn";
 
@@ -38,7 +37,7 @@ export abstract class BlockchainManager {
         if (!this.blockchainStarted) {
           this.stopLocalBlockchain();
           reject(
-            new CustomError(
+            new Error(
               "Local blockchain did not start within the timeout period"
             )
           );
@@ -90,13 +89,13 @@ export abstract class BlockchainManager {
     this.blockchainProcess?.removeAllListeners();
     if (code !== 0) {
       reject(
-        new CustomError(
+        new Error(
           `Local blockchain process exited with code ${code}: ${this.stderr}`
         )
       );
     } else if (!this.blockchainStarted) {
       reject(
-        new CustomError(
+        new Error(
           `Local blockchain did not start within the timeout period: ${this.stderr}`
         )
       );

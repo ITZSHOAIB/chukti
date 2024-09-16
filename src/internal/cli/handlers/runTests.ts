@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import { log } from "../../utils/logger.js";
-import { CustomError, handleError } from "../../utils/errorHandler.js";
+import { handleError } from "../../utils/errorHandler.js";
 
 export const runTests = async () => {
   try {
@@ -12,7 +12,7 @@ export const runTests = async () => {
     );
   } catch (error) {
     handleError(
-      new CustomError(`Error before running tests: ${(error as Error).message}`)
+      new Error(`Error before running tests: ${(error as Error).message}`)
     );
   }
 };
