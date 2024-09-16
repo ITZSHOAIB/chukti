@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.7
+
+### Patch Changes
+
+- 24853b2: Reducing package size
+
 ## 0.0.6
 
 ### Patch Changes
