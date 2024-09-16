@@ -1,39 +1,65 @@
 import path from "path";
 import fs from "fs-extra";
 import { getProjectType } from "../../utils/projectConfig.js";
-import { log } from "../../utils/logger.js";
 import { execSync } from "child_process";
-import { handleError, CustomError } from "../../utils/errorHandler.js";
-import inquirer from "inquirer";
+import { handleError } from "../../utils/errorHandler.js";
 import { ArgumentsCamelCase } from "yargs";
 import { ProjectType } from "../../types.js";
 import { fileURLToPath } from "url";
+import { ERROR_MESSAGES } from "../../utils/errorMessages.js";
+import * as prompt from "@clack/prompts";
+import color from "picocolors";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const initProject = async (argv: ArgumentsCamelCase) => {
   try {
-    log("info", "🚀 Initializing a new Chukti project with Cucumber");
+    prompt.intro(
+      `${color.bgCyan(
+        color.black(" 🚀 Initializing a new Chukti project with Cucumber ")
+      )}`
+    );
+    const userChoices = await prompt.group(
+      {
+        folderName: () =>
+          prompt.text({
+            message: "Confirm the folder name to initialize the project:",
+            placeholder: "(Use . for the current directory)",
+            initialValue: argv.folderName as string,
+            defaultValue: ".",
+          }),
 
-    let folderName: string = argv.folderName as string;
-    if (folderName === undefined) {
-      const { folderNameInput } = await inquirer.prompt([
-        {
-          type: "input",
-          name: "folderNameInput",
-          message:
-            "Enter the folder name to initialize the project (hit Enter to use current directory.):",
-          default: ".",
+        projectType: ({ results }) =>
+          prompt.select({
+            message: `Choose your chukti project setup for ${color.cyan(
+              results.folderName === "."
+                ? path.basename(process.cwd())
+                : results.folderName
+            )}:`,
+            options: [
+              {
+                value: ProjectType.HardhatViem,
+                label: "A TypeScript project with Hardhat + Viem",
+              },
+              {
+                value: ProjectType.ForgeAnvil,
+                label: "A Typescript project with Forge + Anvil",
+                hint: "should be installed manually",
+              },
+            ],
+          }),
+      },
+      {
+        onCancel: () => {
+          prompt.cancel("Project intialization cancelled.");
+          process.exit(0);
         },
-      ]);
-      folderName = folderNameInput;
-    }
+      }
+    );
 
-    const projectPath =
-      folderName === "."
-        ? process.cwd()
-        : path.join(process.cwd(), folderName.toString());
+    const { folderName, projectType } = userChoices;
+    const projectPath = path.join(process.cwd(), folderName.toString());
 
     if (folderName !== ".") {
       fs.ensureDirSync(projectPath);
@@ -41,30 +67,10 @@ export const initProject = async (argv: ArgumentsCamelCase) => {
     process.chdir(projectPath);
 
     if (getProjectType(projectPath)) {
-      throw new CustomError(
-        "A Chukti project already exists in this directory."
-      );
+      throw new Error(ERROR_MESSAGES.CHUKTI_PROJECT_ALREADY_EXISTS);
     }
 
-    const { projectType } = await inquirer.prompt([
-      {
-        type: "list",
-        name: "projectType",
-        message: "Choose your chukti project setup:",
-        choices: [
-          {
-            name: "A TypeScript project with Hardhat + Viem",
-            value: ProjectType.HardhatViem,
-          },
-          {
-            name: "A Typescript project with Forge + Anvil (should be installed manually)",
-            value: ProjectType.ForgeAnvil,
-          },
-        ],
-      },
-    ]);
-
-    await proceedWithInitialization(projectType, projectPath);
+    await proceedWithInitialization(projectType as string, projectPath);
   } catch (error) {
     handleError(error as Error);
   }
@@ -84,22 +90,27 @@ const proceedWithInitialization = async (
       `../../../sample-projects/${projectType.toLowerCase()}`
     );
 
+    const spinner = prompt.spinner();
+
     // Copy the template files to the current directory
-    log("info", "📁 Copying template files...");
+    spinner.start("📁 Initializing project...");
     fs.copySync(commonFilesDir, projectPath);
     fs.copySync(templateDir, projectPath);
-
-    log("success", "✅ Project initialized successfully");
+    spinner.stop("✅ Project initialized successfully");
 
     // Install the dependencies
-    log("info", "📦 Installing chukti...");
+    spinner.start("📦 Installing chukti...");
     execSync("npm install -D chukti", { stdio: "inherit" });
+    spinner.stop("✅ Chukti installed successfully");
 
-    log("info", "📦 Installing dependencies...");
+    spinner.start("📦 Installing other dependencies...");
     execSync("npm install", { stdio: "inherit" });
+    spinner.stop("✅ Dependencies installed successfully");
 
-    log("success", "✅ Dependencies installed successfully");
+    prompt.note(`npx chukti --help    \nnpx chukti test`, "Try running:");
+
+    prompt.outro("✅ Project setup complete! Happy Testing :)");
   } catch (error) {
-    throw new CustomError((error as Error).message);
+    throw new Error((error as Error).message);
   }
 };

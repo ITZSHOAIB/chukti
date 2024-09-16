@@ -1,7 +1,6 @@
 import { execSync, SpawnOptionsWithoutStdio } from "child_process";
 import { BlockchainManager } from "./BlockchainManager.js";
-import { log } from "../utils/logger.js";
-import { CustomError } from "../utils/errorHandler.js";
+import { log } from "../../internal/utils/logger.js";
 import commandExists from "command-exists";
 
 export class HardhatManager extends BlockchainManager {
@@ -16,7 +15,7 @@ export class HardhatManager extends BlockchainManager {
       log("info", "Compiling smart contracts...");
 
       if (!commandExists.sync("npx")) {
-        throw new CustomError(
+        throw new Error(
           "npx not found. Please install it before running the tests."
         );
       }
@@ -24,7 +23,7 @@ export class HardhatManager extends BlockchainManager {
       execSync("npx hardhat compile", { stdio: "inherit" });
       log("info", "Smart Contracts compiled successfully.");
     } catch (error) {
-      throw new CustomError("Failed to compile smart contracts: " + error);
+      throw new Error("Failed to compile smart contracts: " + error);
     }
   }
 

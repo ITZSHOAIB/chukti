@@ -1,6 +1,5 @@
 import { ChildProcess, SpawnOptions } from "child_process";
-import { log } from "../utils/logger.js";
-import { CustomError } from "../utils/errorHandler.js";
+import { log } from "../../internal/utils/logger.js";
 import kill from "tree-kill";
 import spawn from "cross-spawn";
 
@@ -38,7 +37,7 @@ export abstract class BlockchainManager {
         if (!this.blockchainStarted) {
           this.stopLocalBlockchain();
           reject(
-            new CustomError(
+            new Error(
               "Local blockchain did not start within the timeout period"
             )
           );
@@ -50,14 +49,14 @@ export abstract class BlockchainManager {
   public stopLocalBlockchain() {
     if (this.blockchainProcess) {
       kill(this.blockchainProcess.pid!);
-      this.cleanupListeners();
-      this.blockchainProcess.off("close", this.onClose);
+      this.cleanupDataListeners();
+      this.blockchainProcess.removeAllListeners();
       this.blockchainProcess = null;
       log("info", "Local blockchain stopped");
     }
   }
 
-  private cleanupListeners = () => {
+  private cleanupDataListeners = () => {
     if (this.blockchainProcess) {
       this.blockchainProcess.stdout?.off("data", this.onData);
       this.blockchainProcess.stderr?.off("data", this.onError);
@@ -76,7 +75,7 @@ export abstract class BlockchainManager {
     ) {
       log("success", "🚀 Local blockchain started successfully");
       this.blockchainStarted = true;
-      this.cleanupListeners();
+      this.cleanupDataListeners();
       resolve();
     }
   };
@@ -86,16 +85,17 @@ export abstract class BlockchainManager {
   };
 
   private onClose = (reject: (reason?: any) => void) => (code: number) => {
-    this.cleanupListeners();
+    this.cleanupDataListeners();
+    this.blockchainProcess?.removeAllListeners();
     if (code !== 0) {
       reject(
-        new CustomError(
+        new Error(
           `Local blockchain process exited with code ${code}: ${this.stderr}`
         )
       );
     } else if (!this.blockchainStarted) {
       reject(
-        new CustomError(
+        new Error(
           `Local blockchain did not start within the timeout period: ${this.stderr}`
         )
       );

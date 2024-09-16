@@ -1,20 +1,14 @@
-import {
-  createTestClient,
-  http,
-  publicActions,
-  walletActions,
-  Abi,
-  TestClientConfig,
-} from "viem";
-import { anvil, hardhat } from "viem/chains";
+import { Abi, DeployContractParameters } from "viem";
 import fs from "fs-extra";
 import path from "path";
 import { world } from "@cucumber/cucumber";
 import assert from "assert";
 import { getProjectType } from "../../../internal/utils/projectConfig.js";
 import { ProjectType } from "../../../internal/types.js";
+import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
+import { getTestClient } from "../../../viem/getTestClient.js";
 
-export const verifyContractPath = function (contractPath: string) {
+export const verifyContractPath = (contractPath: string) => {
   if (!contractPath.toLowerCase().includes(".sol")) {
     contractPath = `${contractPath}.sol`;
   }
@@ -27,14 +21,14 @@ export const verifyContractPath = function (contractPath: string) {
   world.log(`Contract exists at: ${contractPath}`);
 };
 
-export const deployContract = async function (args: string, amount: string) {
-  if (!world?.contractPath) {
-    throw new Error("❌ Contract path not set. Please set the contract path");
-  }
-
+export const deployContract = async (args: string, amount: string) => {
   const projectType = getProjectType(process.cwd());
   if (projectType === null) {
-    throw new Error("❌ No Chukti project found in the current directory.");
+    throw new Error(ERROR_MESSAGES.CHUKTI_PROJECT_NOT_FOUND);
+  }
+
+  if (!world?.contractPath) {
+    throw new Error(ERROR_MESSAGES.CONTRACT_PATH_NOT_SET);
   }
 
   const contractPath = world.contractPath;
@@ -59,20 +53,7 @@ export const deployContract = async function (args: string, amount: string) {
 
   const contract = fs.readJSONSync(compiledContractPath);
 
-  const testClientConfigOverride: Partial<TestClientConfig> = {};
-  if (projectType === ProjectType.ForgeAnvil) {
-    testClientConfigOverride.chain = anvil;
-    testClientConfigOverride.mode = "anvil";
-  }
-
-  const testClient = createTestClient({
-    chain: hardhat,
-    mode: "hardhat",
-    transport: http(),
-    ...testClientConfigOverride,
-  })
-    .extend(publicActions)
-    .extend(walletActions);
+  const testClient = getTestClient();
 
   const testAddresses = await testClient.getAddresses();
   const deployerAddress = testAddresses[0];
@@ -86,7 +67,7 @@ export const deployContract = async function (args: string, amount: string) {
         : contract.bytecode.object,
     args: JSON.parse(args),
     value: BigInt(amount),
-  });
+  } as DeployContractParameters);
 
   world.log(
     `Contract deployment initiated. Transaction hash: ${transactionHash}`

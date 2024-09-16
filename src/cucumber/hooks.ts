@@ -1,9 +1,10 @@
 import { log } from "../internal/utils/logger.js";
-import { CustomError, handleError } from "../internal/utils/errorHandler.js";
-import { HardhatManager } from "../internal/local-blockchain/HardhatManager.js";
-import { AnvilManager } from "../internal/local-blockchain/AnvilManager.js";
+import { handleError } from "../internal/utils/errorHandler.js";
+import { HardhatManager } from "../local-blockchain/blockchain-managers/HardhatManager.js";
+import { AnvilManager } from "../local-blockchain/blockchain-managers/AnvilManager.js";
 import { getProjectType } from "../internal/utils/projectConfig.js";
 import { ProjectType } from "../internal/types.js";
+import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
 
 let blockchainManager: HardhatManager | AnvilManager;
 
@@ -13,9 +14,7 @@ export const beforeAll = async () => {
 
     const projectType = getProjectType(process.cwd());
     if (!projectType) {
-      throw new CustomError(
-        "No Chukti project found in the current directory."
-      );
+      throw new Error(ERROR_MESSAGES.CHUKTI_PROJECT_NOT_FOUND);
     }
 
     if (projectType === ProjectType.HardhatViem) {
@@ -25,8 +24,8 @@ export const beforeAll = async () => {
       blockchainManager = new AnvilManager();
       await blockchainManager.startAnvilBlockchain();
     } else {
-      throw new CustomError(
-        "Unsupported project type. Please check chukti.config.json"
+      throw new Error(
+        ERROR_MESSAGES.UNSUPPORTED_PROJECT_TYPE(projectType as string)
       );
     }
   } catch (error) {
