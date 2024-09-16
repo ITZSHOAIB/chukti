@@ -14,6 +14,7 @@ import { anvil, hardhat } from "viem/chains";
 import { getProjectType } from "../internal/utils/projectConfig.js";
 import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
 
+// TODO: Fine tune the return type
 export const getTestClient = (): Client &
   TestActions &
   PublicActions &

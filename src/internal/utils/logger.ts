@@ -1,4 +1,4 @@
-import kleur from "kleur";
+import color from "picocolors";
 
 type LogType = "success" | "error" | "warning" | "info";
 
@@ -9,16 +9,16 @@ export const log = (type: LogType, message: string) => {
 
   switch (type) {
     case "success":
-      console.log(kleur.green(formattedMessage));
+      console.log(color.green(formattedMessage));
       break;
     case "error":
-      console.error(kleur.red(formattedMessage));
+      console.error(color.red(formattedMessage));
       break;
     case "warning":
-      console.warn(kleur.yellow(formattedMessage));
+      console.warn(color.yellow(formattedMessage));
       break;
     case "info":
-      console.info(kleur.cyan(formattedMessage));
+      console.info(color.cyan(formattedMessage));
       break;
     default:
       console.log(formattedMessage);

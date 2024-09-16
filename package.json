@@ -50,12 +50,12 @@
     "lint": "tsc"
   },
   "dependencies": {
+    "@clack/prompts": "^0.7.0",
     "@cucumber/cucumber": "^11.0.0",
     "command-exists": "^1.2.9",
     "cross-spawn": "^7.0.3",
     "fs-extra": "^11.2.0",
-    "inquirer": "^10.2.2",
-    "kleur": "^4.1.5",
+    "picocolors": "^1.1.0",
     "tree-kill": "^1.2.2",
     "ts-node": "^10.9.2",
     "viem": "^2.21.2",

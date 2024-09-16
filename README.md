@@ -41,10 +41,15 @@ To initialize a Chukti project, use the `npx chukti init` command. You can speci
 During the initialization, you will be prompted to choose between the following project types:
 
 ```bash
-🚀 Initializing a new Chukti project with Cucumber
-? Choose your chukti project setup: (Use arrow keys)
-❯ A TypeScript project with Hardhat + Viem
-  A Typescript project with Forge + Anvil (should be installed manually)
+┌  🚀 Initializing a new Chukti project with Cucumber
+│
+◇  Confirm the folder name to initialize the project:
+│  new_project
+│
+◆  Choose your chukti project setup for new_project:
+│  ○ A TypeScript project with Hardhat + Viem
+│  ● A Typescript project with Forge + Anvil (should be installed manually)
+└
 ```
 
 ### Confused? What to choose?
