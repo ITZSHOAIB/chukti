@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.6
+
+### Patch Changes
+
+- 70c9eca: Improved project structure and CLI
+
 ## 0.0.5
 
 ### Patch Changes
