@@ -14,40 +14,34 @@
   "bin": {
     "chukti": "dist/internal/cli/index.js"
   },
-  "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./cucumber": {
-      "types": "./dist/cucumber/index.d.ts",
       "import": "./dist/cucumber/index.js",
       "require": "./dist/cucumber/index.cjs"
     },
     "./local-blockchain": {
-      "types": "./dist/local-blockchain/index.d.ts",
       "import": "./dist/local-blockchain/index.js",
       "require": "./dist/local-blockchain/index.cjs"
     },
     "./viem": {
-      "types": "./dist/viem/index.d.ts",
       "import": "./dist/viem/index.js",
       "require": "./dist/viem/index.cjs"
     }
   },
   "scripts": {
     "start": "ts-node src/internal/cli/index.ts",
-    "build:local": "pnpm build && pnpm link --global",
-    "build": "pnpm lint && pnpm clean && tsup --config tsup.config.ts",
+    "build:local": "pnpm typecheck && pnpm build && pnpm link --global",
+    "build": "pnpm clean && tsup --config tsup.config.ts",
     "clean": "rimraf dist",
     "changeset:version": "changeset version",
     "changeset:publish": "pnpm build && changeset publish",
-    "lint": "tsc"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
@@ -88,6 +82,6 @@
     "Hardhat cucumber"
   ],
   "simple-git-hooks": {
-    "pre-commit": "pnpm build"
+    "pre-commit": "pnpm typecheck && pnpm build"
   }
 }
