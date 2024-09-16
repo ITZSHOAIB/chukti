@@ -8,6 +8,8 @@ export default defineConfig([
     tsconfig: "tsconfig.json",
     dts: false,
     minify: true,
+    bundle: true,
+    treeshake: true,
   },
   {
     entry: ["src/**/*.ts", "!src/internal/cli/**/*.ts"],
@@ -16,6 +18,7 @@ export default defineConfig([
     dts: true,
     splitting: false,
     bundle: false,
+    treeshake: true,
     plugins: [
       {
         // https://github.com/egoist/tsup/issues/953#issuecomment-2132576167
