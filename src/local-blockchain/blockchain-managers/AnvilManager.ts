@@ -1,7 +1,7 @@
-import { execSync, SpawnOptionsWithoutStdio } from "child_process";
-import { BlockchainManager } from "./BlockchainManager.js";
-import { log } from "../../internal/utils/logger.js";
+import { type SpawnOptionsWithoutStdio, execSync } from "node:child_process";
 import commandExists from "command-exists";
+import { log } from "../../internal/utils/logger.js";
+import { BlockchainManager } from "./BlockchainManager.js";
 
 export class AnvilManager extends BlockchainManager {
   constructor() {
@@ -14,23 +14,23 @@ export class AnvilManager extends BlockchainManager {
 
       if (!commandExists.sync("forge")) {
         throw new Error(
-          "Forge not found. Please install it before running the tests. Refer to the documentation: https://book.getfoundry.sh/getting-started/installation#using-foundryup"
+          "Forge not found. Please install it before running the tests. Refer to the documentation: https://book.getfoundry.sh/getting-started/installation#using-foundryup",
         );
       }
 
       execSync("forge build", { stdio: "inherit" });
       log("info", "Smart contracts compiled successfully.");
     } catch (error) {
-      throw new Error("Failed to compile Anvil project: " + error);
+      throw new Error(`Failed to compile Anvil project: ${error}`);
     }
   }
 
-  public async startAnvilBlockchain(timeout: number = 30_000): Promise<void> {
+  public async startAnvilBlockchain(timeout = 30_000): Promise<void> {
     this.compileProject();
 
     if (!commandExists.sync("anvil")) {
       throw new Error(
-        "Anvil not found. Please install it before running the tests. Refer to the documentation: https://book.getfoundry.sh/getting-started/installation#using-foundryup"
+        "Anvil not found. Please install it before running the tests. Refer to the documentation: https://book.getfoundry.sh/getting-started/installation#using-foundryup",
       );
     }
 

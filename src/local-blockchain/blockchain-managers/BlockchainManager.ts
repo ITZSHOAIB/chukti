@@ -1,7 +1,7 @@
-import { ChildProcess, SpawnOptions } from "child_process";
-import { log } from "../../internal/utils/logger.js";
-import kill from "tree-kill";
+import type { ChildProcess, SpawnOptions } from "node:child_process";
 import spawn from "cross-spawn";
+import kill from "tree-kill";
+import { log } from "../../internal/utils/logger.js";
 
 interface BlockchainManagerOptions {
   confirmationMessage: string;
@@ -23,7 +23,7 @@ export abstract class BlockchainManager {
     spawnCommand: string,
     args: string[],
     options: SpawnOptions,
-    timeout: number = 30_000
+    timeout = 30_000,
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       this.blockchainProcess = spawn(spawnCommand, args, options);
@@ -38,8 +38,8 @@ export abstract class BlockchainManager {
           this.stopLocalBlockchain();
           reject(
             new Error(
-              "Local blockchain did not start within the timeout period"
-            )
+              "Local blockchain did not start within the timeout period",
+            ),
           );
         }
       }, timeout);
@@ -48,7 +48,9 @@ export abstract class BlockchainManager {
 
   public stopLocalBlockchain() {
     if (this.blockchainProcess) {
-      kill(this.blockchainProcess.pid!);
+      if (this.blockchainProcess?.pid) {
+        kill(this.blockchainProcess.pid);
+      }
       this.cleanupDataListeners();
       this.blockchainProcess.removeAllListeners();
       this.blockchainProcess = null;
@@ -84,20 +86,20 @@ export abstract class BlockchainManager {
     this.stderr += data.toString();
   };
 
-  private onClose = (reject: (reason?: any) => void) => (code: number) => {
+  private onClose = (reject: (reason?: unknown) => void) => (code: number) => {
     this.cleanupDataListeners();
     this.blockchainProcess?.removeAllListeners();
     if (code !== 0) {
       reject(
         new Error(
-          `Local blockchain process exited with code ${code}: ${this.stderr}`
-        )
+          `Local blockchain process exited with code ${code}: ${this.stderr}`,
+        ),
       );
     } else if (!this.blockchainStarted) {
       reject(
         new Error(
-          `Local blockchain did not start within the timeout period: ${this.stderr}`
-        )
+          `Local blockchain did not start within the timeout period: ${this.stderr}`,
+        ),
       );
     }
   };

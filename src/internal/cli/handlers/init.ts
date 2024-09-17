@@ -1,14 +1,14 @@
-import path from "path";
-import fs from "fs-extra";
-import { getProjectType } from "../../utils/projectConfig.js";
-import { execSync } from "child_process";
-import { handleError } from "../../utils/errorHandler.js";
-import { ArgumentsCamelCase } from "yargs";
-import { ProjectType } from "../../types.js";
-import { fileURLToPath } from "url";
-import { ERROR_MESSAGES } from "../../utils/errorMessages.js";
+import { execSync } from "node:child_process";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import * as prompt from "@clack/prompts";
+import fs from "fs-extra";
 import color from "picocolors";
+import type { ArgumentsCamelCase } from "yargs";
+import { ProjectType } from "../../types.js";
+import { handleError } from "../../utils/errorHandler.js";
+import { ERROR_MESSAGES } from "../../utils/errorMessages.js";
+import { getProjectType } from "../../utils/projectConfig.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,8 +17,8 @@ export const initProject = async (argv: ArgumentsCamelCase) => {
   try {
     prompt.intro(
       `${color.bgCyan(
-        color.black(" 🚀 Initializing a new Chukti project with Cucumber ")
-      )}`
+        color.black(" 🚀 Initializing a new Chukti project with Cucumber "),
+      )}`,
     );
     const userChoices = await prompt.group(
       {
@@ -35,7 +35,7 @@ export const initProject = async (argv: ArgumentsCamelCase) => {
             message: `Choose your chukti project setup for ${color.cyan(
               results.folderName === "."
                 ? path.basename(process.cwd())
-                : results.folderName
+                : results.folderName,
             )}:`,
             options: [
               {
@@ -55,7 +55,7 @@ export const initProject = async (argv: ArgumentsCamelCase) => {
           prompt.cancel("Project intialization cancelled.");
           process.exit(0);
         },
-      }
+      },
     );
 
     const { folderName, projectType } = userChoices;
@@ -78,16 +78,16 @@ export const initProject = async (argv: ArgumentsCamelCase) => {
 
 const proceedWithInitialization = async (
   projectType: string,
-  projectPath: string
+  projectPath: string,
 ) => {
   try {
     const commonFilesDir = path.join(
       __dirname,
-      "../../../sample-projects/common"
+      "../../../sample-projects/common",
     );
     const templateDir = path.join(
       __dirname,
-      `../../../sample-projects/${projectType.toLowerCase()}`
+      `../../../sample-projects/${projectType.toLowerCase()}`,
     );
 
     const spinner = prompt.spinner();
@@ -107,7 +107,7 @@ const proceedWithInitialization = async (
     execSync("npm install", { stdio: "inherit" });
     spinner.stop("✅ Dependencies installed successfully");
 
-    prompt.note(`npx chukti --help    \nnpx chukti test`, "Try running:");
+    prompt.note("npx chukti --help    \nnpx chukti test", "Try running:");
 
     prompt.outro("✅ Project setup complete! Happy Testing :)");
   } catch (error) {

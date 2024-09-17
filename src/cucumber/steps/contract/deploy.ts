@@ -1,20 +1,18 @@
-import { Abi, DeployContractParameters } from "viem";
-import fs from "fs-extra";
-import path from "path";
+import assert from "node:assert";
+import path from "node:path";
 import { world } from "@cucumber/cucumber";
-import assert from "assert";
-import { getProjectType } from "../../../internal/utils/projectConfig.js";
+import fs from "fs-extra";
+import type { Abi, DeployContractParameters } from "viem";
 import { ProjectType } from "../../../internal/types.js";
 import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
+import { getProjectType } from "../../../internal/utils/projectConfig.js";
 import { getTestClient } from "../../../viem/getTestClient.js";
 
 export const verifyContractPath = (contractPath: string) => {
   if (!contractPath.toLowerCase().includes(".sol")) {
-    contractPath = `${contractPath}.sol`;
-  }
-
-  if (!fs.existsSync(path.resolve(process.cwd(), contractPath))) {
-    throw new Error(`❌ Contract file not found at: ${contractPath}`);
+    if (!fs.existsSync(path.resolve(process.cwd(), `${contractPath}.sol`))) {
+      throw new Error(`❌ Contract file not found at: ${contractPath}`);
+    }
   }
 
   world.contractPath = contractPath;
@@ -33,17 +31,17 @@ export const deployContract = async (args: string, amount: string) => {
 
   const contractPath = world.contractPath;
   const contractName = path.basename(contractPath, ".sol");
-  let compiledContractPath: string = "";
+  let compiledContractPath = "";
 
   if (projectType === ProjectType.HardhatViem) {
     compiledContractPath = path.resolve(
       process.cwd(),
-      `artifacts/${contractPath}/${contractName}.json`
+      `artifacts/${contractPath}/${contractName}.json`,
     );
   } else if (projectType === ProjectType.ForgeAnvil) {
     compiledContractPath = path.resolve(
       process.cwd(),
-      `out/${contractName}.sol/${contractName}.json`
+      `out/${contractName}.sol/${contractName}.json`,
     );
   }
 
@@ -70,7 +68,7 @@ export const deployContract = async (args: string, amount: string) => {
   } as DeployContractParameters);
 
   world.log(
-    `Contract deployment initiated. Transaction hash: ${transactionHash}`
+    `Contract deployment initiated. Transaction hash: ${transactionHash}`,
   );
 
   const transactionReceipt = await testClient.waitForTransactionReceipt({
@@ -80,7 +78,7 @@ export const deployContract = async (args: string, amount: string) => {
   assert.strictEqual(transactionReceipt.status, "success");
 
   world.log(
-    `Contract deployed successfully at: ${transactionReceipt.contractAddress}`
+    `Contract deployed successfully at: ${transactionReceipt.contractAddress}`,
   );
   world.contractAddress = transactionReceipt.contractAddress;
 };

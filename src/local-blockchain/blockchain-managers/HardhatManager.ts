@@ -1,7 +1,7 @@
-import { execSync, SpawnOptionsWithoutStdio } from "child_process";
-import { BlockchainManager } from "./BlockchainManager.js";
-import { log } from "../../internal/utils/logger.js";
+import { type SpawnOptionsWithoutStdio, execSync } from "node:child_process";
 import commandExists from "command-exists";
+import { log } from "../../internal/utils/logger.js";
+import { BlockchainManager } from "./BlockchainManager.js";
 
 export class HardhatManager extends BlockchainManager {
   constructor() {
@@ -16,18 +16,18 @@ export class HardhatManager extends BlockchainManager {
 
       if (!commandExists.sync("npx")) {
         throw new Error(
-          "npx not found. Please install it before running the tests."
+          "npx not found. Please install it before running the tests.",
         );
       }
 
       execSync("npx hardhat compile", { stdio: "inherit" });
       log("info", "Smart Contracts compiled successfully.");
     } catch (error) {
-      throw new Error("Failed to compile smart contracts: " + error);
+      throw new Error(`Failed to compile smart contracts: ${error}`);
     }
   }
 
-  public async startHardhatBlockchain(timeout: number = 30_000): Promise<void> {
+  public async startHardhatBlockchain(timeout = 30_000): Promise<void> {
     this.compileProject();
 
     const isWindows = process.platform === "win32";
