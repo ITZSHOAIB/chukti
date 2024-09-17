@@ -1,18 +1,18 @@
 import {
-  Client,
-  createTestClient,
   http,
-  PublicActions,
+  type Client,
+  type PublicActions,
+  type TestActions,
+  type TestClientConfig,
+  type WalletActions,
+  createTestClient,
   publicActions,
-  TestActions,
-  TestClientConfig,
-  WalletActions,
   walletActions,
 } from "viem";
-import { ProjectType } from "../internal/types.js";
 import { anvil, hardhat } from "viem/chains";
-import { getProjectType } from "../internal/utils/projectConfig.js";
+import { ProjectType } from "../internal/types.js";
 import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
+import { getProjectType } from "../internal/utils/projectConfig.js";
 
 // TODO: Fine tune the return type
 export const getTestClient = (): Client &

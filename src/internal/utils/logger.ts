@@ -4,7 +4,7 @@ type LogType = "success" | "error" | "warning" | "info";
 
 export const log = (type: LogType, message: string) => {
   const formattedMessage = message.replace(/(https?:\/\/[^\s]+)/g, (url) =>
-    makeUrlClickable(url)
+    makeUrlClickable(url),
   );
 
   switch (type) {

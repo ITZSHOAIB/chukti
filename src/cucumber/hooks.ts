@@ -1,10 +1,10 @@
-import { log } from "../internal/utils/logger.js";
-import { handleError } from "../internal/utils/errorHandler.js";
-import { HardhatManager } from "../local-blockchain/blockchain-managers/HardhatManager.js";
-import { AnvilManager } from "../local-blockchain/blockchain-managers/AnvilManager.js";
-import { getProjectType } from "../internal/utils/projectConfig.js";
 import { ProjectType } from "../internal/types.js";
+import { handleError } from "../internal/utils/errorHandler.js";
 import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
+import { log } from "../internal/utils/logger.js";
+import { getProjectType } from "../internal/utils/projectConfig.js";
+import { AnvilManager } from "../local-blockchain/blockchain-managers/AnvilManager.js";
+import { HardhatManager } from "../local-blockchain/blockchain-managers/HardhatManager.js";
 
 let blockchainManager: HardhatManager | AnvilManager;
 
@@ -25,7 +25,7 @@ export const beforeAll = async () => {
       await blockchainManager.startAnvilBlockchain();
     } else {
       throw new Error(
-        ERROR_MESSAGES.UNSUPPORTED_PROJECT_TYPE(projectType as string)
+        ERROR_MESSAGES.UNSUPPORTED_PROJECT_TYPE(projectType as string),
       );
     }
   } catch (error) {

@@ -8,6 +8,6 @@ export const ERROR_MESSAGES = {
     "A Chukti project already exists in this directory.",
   UNSUPPORTED_PROJECT_TYPE: (projectType: string) =>
     `Unsupported project type: ${projectType}. Please check chukti.config.json. Supported project types are [${Object.values(
-      ProjectType
+      ProjectType,
     ).join(", ")}]`,
 };
