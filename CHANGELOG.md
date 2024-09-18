@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.8
+
+### Patch Changes
+
+- [#21](https://github.com/ITZSHOAIB/chukti/pull/21) [`55d1a2c`](https://github.com/ITZSHOAIB/chukti/commit/55d1a2c6e1147ba8d2a19501957ec66c861e2271) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - feat: read contract and validation related step definitions added
+
 ## 0.0.7
 
 ### Patch Changes
