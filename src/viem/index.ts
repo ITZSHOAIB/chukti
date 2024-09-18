@@ -1,1 +1,6 @@
-export { getTestClient } from "./getTestClient.js";
+export {
+  DeploymentResult,
+  DeployParams,
+  deployContract,
+} from "./deployContract.js";
+// export { ReadContractParams, readContract } from "./readContract.js";
