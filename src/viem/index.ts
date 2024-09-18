@@ -3,4 +3,4 @@ export {
   DeployParams,
   deployContract,
 } from "./deployContract.js";
-// export { ReadContractParams, readContract } from "./readContract.js";
+export { ReadContractParams, readContract } from "./readContract.js";

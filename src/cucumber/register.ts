@@ -6,8 +6,8 @@ import {
   setDefaultTimeout,
 } from "@cucumber/cucumber";
 import {
-  beforeAll as defaultBeforeAll,
   afterAll as defaultAfterAll,
+  beforeAll as defaultBeforeAll,
 } from "./hooks.js";
 import {
   deployContractStep,

@@ -1,10 +1,10 @@
-import type { Abi, DeployContractParameters } from "viem";
-import { getTestClient } from "./internal/getTestClient.js";
-import { getProjectType } from "../internal/utils/projectConfig.js";
-import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
 import path from "node:path";
 import fs from "fs-extra";
+import type { Abi, DeployContractParameters } from "viem";
 import { ProjectType } from "../internal/types.js";
+import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
+import { getProjectType } from "../internal/utils/projectConfig.js";
+import { getTestClient } from "./internal/getTestClient.js";
 
 export interface DeploymentResult {
   deploymentStatus: "success" | "reverted";
