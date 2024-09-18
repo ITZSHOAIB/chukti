@@ -5,3 +5,5 @@ export {
   verifyContractPathStep,
 } from "./steps/contract/deploy.js";
 export { readContractStep } from "./steps/contract/read.js";
+
+export { resultComparisonStep } from "./steps/generic/dataComparison.js";
