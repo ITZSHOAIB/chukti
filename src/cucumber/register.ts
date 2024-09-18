@@ -3,6 +3,7 @@ import {
   BeforeAll,
   Given,
   Then,
+  When,
   setDefaultTimeout,
 } from "@cucumber/cucumber";
 import {
@@ -13,6 +14,7 @@ import {
   deployContractStep,
   verifyContractPathStep,
 } from "./steps/contract/deploy.js";
+import { readContractStep } from "./steps/contract/read.js";
 
 export interface RegisterChuktiStepsParams {
   customHooks?: {
@@ -38,5 +40,9 @@ export const registerChuktiSteps = ({
   Then(
     "deploy the contract with {string} arguments and {string} Ether",
     deployContractStep,
+  );
+  When(
+    "reading the contract function {string} with arguments {string} and store the result in {string}",
+    readContractStep,
   );
 };

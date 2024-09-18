@@ -9,11 +9,15 @@ import { deployContract } from "../../../viem/deployContract.js";
 export const verifyContractPathStep = (contractPath: string) => {
   if (!contractPath.toLowerCase().includes(".sol")) {
     if (!fs.existsSync(path.resolve(process.cwd(), `${contractPath}.sol`))) {
-      throw new Error(`❌ Contract file not found at: ${contractPath}`);
+      throw new Error(`Contract file not found at: ${contractPath}`);
     }
   }
 
-  world.contractPath = contractPath;
+  if (!world.chukti) {
+    world.chukti = {};
+  }
+
+  world.chukti.contractPath = contractPath;
   world.log(`Contract exists at: ${contractPath}`);
 };
 
@@ -23,21 +27,23 @@ export const deployContractStep = async (args: string, amount: string) => {
     throw new Error(ERROR_MESSAGES.CHUKTI_PROJECT_NOT_FOUND);
   }
 
-  if (!world?.contractPath) {
+  if (!world.chukti?.contractPath) {
     throw new Error(ERROR_MESSAGES.CONTRACT_PATH_NOT_SET);
   }
 
-  const contractPath = world.contractPath;
+  const contractPath = world.chukti.contractPath;
 
   // TODO: Implement cucumber datatable for args or other strategy to properly get array of arguments
-  const { deploymentStatus, deployedAddress } = await deployContract({
-    contractPath,
-    args: args?.trim() ? JSON.parse(args) : undefined,
-    amount: amount?.trim() ? BigInt(amount) : undefined,
-  });
+  const { deploymentStatus, deployedAddress, contractAbi } =
+    await deployContract({
+      contractPath,
+      args: args?.trim() ? JSON.parse(args) : undefined,
+      amount: amount?.trim() ? BigInt(amount) : undefined,
+    });
 
   assert.strictEqual(deploymentStatus, "success");
 
   world.log(`Contract deployed successfully at: ${deployedAddress}`);
-  world.deployedAddress = deployedAddress;
+  world.chukti.deployedAddress = deployedAddress;
+  world.chukti.contractAbi = contractAbi;
 };
