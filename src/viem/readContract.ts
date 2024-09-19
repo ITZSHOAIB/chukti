@@ -5,7 +5,7 @@ export interface ReadContractParams {
   contractAdress: `0x${string}`;
   contractAbi: Abi;
   functionName: string;
-  args: unknown[];
+  args?: unknown[] | undefined;
 }
 
 export const readContract = async ({
@@ -19,8 +19,8 @@ export const readContract = async ({
   const data = await testClient.readContract({
     address: contractAdress,
     abi: contractAbi,
-    functionName: functionName,
-    args: args,
+    functionName,
+    args,
   });
 
   return data;

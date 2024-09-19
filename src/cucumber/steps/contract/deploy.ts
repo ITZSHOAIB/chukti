@@ -18,7 +18,7 @@ export const verifyContractPathStep = (contractPath: string) => {
   }
 
   world.chukti.contractPath = contractPath;
-  world.log(`Contract exists at: ${contractPath}`);
+  world.log(`Contract exists at: ${JSON.stringify(contractPath)}`);
 };
 
 export const deployContractStep = async (args: string, amount: string) => {
@@ -33,12 +33,15 @@ export const deployContractStep = async (args: string, amount: string) => {
 
   const contractPath = world.chukti.contractPath;
 
+  const parsedArgs = args?.trim() ? JSON.parse(args) : [];
+  const parsedAmount = amount?.trim() ? BigInt(amount) : undefined;
+
   // TODO: Implement cucumber datatable for args or other strategy to properly get array of arguments
   const { deploymentStatus, deployedAddress, contractAbi } =
     await deployContract({
       contractPath,
-      args: args?.trim() ? JSON.parse(args) : undefined,
-      amount: amount?.trim() ? BigInt(amount) : undefined,
+      args: parsedArgs,
+      amount: parsedAmount,
     });
 
   assert.strictEqual(deploymentStatus, "success");

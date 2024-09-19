@@ -74,10 +74,7 @@
     "tsup": "^8.2.4",
     "typescript": "^5.1.6"
   },
-  "files": [
-    "dist",
-    "sample-projects"
-  ],
+  "files": ["dist", "sample-projects"],
   "keywords": [
     "Smart contract test",
     "Smart contract test cucumber",
