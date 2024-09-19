@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.9
+
+### Patch Changes
+
+- [#23](https://github.com/ITZSHOAIB/chukti/pull/23) [`ca9c1f7`](https://github.com/ITZSHOAIB/chukti/commit/ca9c1f775c2b432234b1747d1f2b99862a3a7760) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - feat: write to contract functionality added with step definitions
+
 ## 0.0.8
 
 ### Patch Changes
