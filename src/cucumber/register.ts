@@ -15,6 +15,7 @@ import {
   verifyContractPathStep,
 } from "./steps/contract/deploy.js";
 import { readContractStep } from "./steps/contract/read.js";
+import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
 
 export interface RegisterChuktiStepsParams {
@@ -46,6 +47,10 @@ export const registerChuktiSteps = ({
   When(
     "reading the contract function {string} with arguments {string} and store the result in {string}",
     readContractStep,
+  );
+  When(
+    "writing to the contract function {string} with arguments {string} and {string} Ether and store the transaction hash in {string}",
+    writeContractStep,
   );
 
   // generic steps
