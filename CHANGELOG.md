@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.10
+
+### Patch Changes
+
+- [`25d3445`](https://github.com/ITZSHOAIB/chukti/commit/25d3445c41af161df1a1b64b3e5e9195224d48f3) - refactor: revamped existing step definitions to follow BDD properly
+
 ## 0.0.9
 
 ### Patch Changes
