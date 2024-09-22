@@ -12,7 +12,8 @@
       "node_modules",
       "tsconfig.json",
       "tsconfig.*.json",
-      "sample-projects"
+      "sample-projects",
+      "docs"
     ]
   },
   "formatter": {

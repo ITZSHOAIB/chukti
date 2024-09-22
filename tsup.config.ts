@@ -15,6 +15,8 @@ export default defineConfig([
     entry: ["src/**/*.ts", "!src/internal/cli/**/*.ts"],
     format: ["cjs", "esm"],
     tsconfig: "tsconfig.json",
+    sourcemap: true,
+    minify: true,
     dts: true,
     splitting: false,
     bundle: false,
