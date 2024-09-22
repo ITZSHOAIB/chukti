@@ -13,8 +13,25 @@ npx chukti init
 ```bash [pnpm]
 pnpm dlx chukti init
 ```
-```bash [if Chukti installed globally]
-chukti test
+```bash [if installed globally]
+chukti init
+```
+:::
+
+Initialize by installing `chukti` globally [optional]
+
+:::code-group
+```bash [npm]
+npm install -g chukti
+chukti init
+```
+```bash [pnpm]
+pnpm add -g chukti
+chukti init
+```
+```bash [yarn]
+yarn global add chukti
+chukti init
 ```
 :::
 
