@@ -24,7 +24,7 @@ export const initProject = async (argv: ArgumentsCamelCase) => {
       {
         folderName: () =>
           prompt.text({
-            message: "Confirm the folder name to initialize the project:",
+            message: "Confirm the folder to initialize the project:",
             placeholder: "(Use . for the current directory)",
             initialValue: argv.folderName as string,
             defaultValue: ".",
