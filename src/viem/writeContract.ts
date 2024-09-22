@@ -15,13 +15,13 @@ export const writeContract = async ({
   functionName,
   args,
   amount,
-}: WriteContractParams): Promise<`0x${string}`> => {
+}: WriteContractParams): Promise<unknown> => {
   const testClient = getTestClient();
 
   const testAddresses = await testClient.getAddresses();
   const deployedAddress = testAddresses[0];
 
-  const { request } = await testClient.simulateContract({
+  const { request, result } = await testClient.simulateContract({
     address: contractAdress,
     abi: contractAbi,
     functionName,
@@ -30,5 +30,7 @@ export const writeContract = async ({
     value: amount,
   });
 
-  return await testClient.writeContract(request);
+  await testClient.writeContract(request);
+
+  return result;
 };

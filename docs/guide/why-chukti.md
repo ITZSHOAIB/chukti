@@ -29,21 +29,24 @@ Chukti significantly improves the developer experience by allowing you to write 
 - **Collaborative Testing**: The readability of Gherkin syntax allows non-technical team members, such as product managers and business analysts, to understand and contribute to the test scenarios. This fosters better collaboration and ensures that everyone is on the same page.
 - **Example Scenario**: Here's an example of a test scenario written in plain English using Chukti:
 
-```gherkin
+::: code-group
+```gherkin [features/counter.feature]
 Feature: Counter contract example
-  Scenario: deploy a contract with arguments
-    Given a contract at path "contracts/Counter.sol"
-    Then deploy the contract with "[10]" arguments and "0" Ether
 
-    When reading the contract function "getNumber" with arguments "[]" and store the result in "currentNumber"
-    Then the value stored in "currentNumber" should be "equal to" "10"
+  Scenario: Deploy and interact with the Counter contract
+    Given I have a smart contract located at "contracts/Counter.sol"
+    Then I deploy the smart contract with constructor arguments "[10]" and send "0" Ether
 
-    When writing to the contract function "increment" with arguments "[]" and "0" Ether and store the transaction hash in "txHash"
-    Then the value stored in "txHash" should be "not equal to" "null"
+    When I call the read function "getNumber" from the contract with arguments "[]"
+    Then I store the result in "currentNumber"
+    And I validate the value stored in "currentNumber" should be "equal to" "10"
 
-    When reading the contract function "getNumber" with arguments "[]" and store the result in "currentNumber"
-    Then the value stored in "currentNumber" should be "equal to" "11"
+    When I call the write function "increment" from the contract with arguments "[]" and send "0" Ether
+    And I call the read function "getNumber" from the contract with arguments "[]"
+    Then I store the result in "currentNumber"
+    And I validate the value stored in "currentNumber" should be "equal to" "11"
 ```
+:::
 
 This scenario is easy to read and understand, even for those who are not familiar with the underlying code.
 

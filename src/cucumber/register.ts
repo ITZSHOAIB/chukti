@@ -17,6 +17,7 @@ import {
 import { readContractStep } from "./steps/contract/read.js";
 import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
+import { storeResultStep } from "./steps/generic/storeResult.js";
 
 export interface RegisterChuktiStepsParams {
   customHooks?: {
@@ -39,23 +40,24 @@ export const registerChuktiSteps = ({
   AfterAll(afterAllHook);
 
   // contract steps
-  Given("a contract at path {string}", verifyContractPathStep);
+  Given("I have a smart contract located at {string}", verifyContractPathStep);
   Then(
-    "deploy the contract with {string} arguments and {string} Ether",
+    "I deploy the smart contract with constructor arguments {string} and send {string} Ether",
     deployContractStep,
   );
   When(
-    "reading the contract function {string} with arguments {string} and store the result in {string}",
+    "I call the read function {string} from the contract with arguments {string}",
     readContractStep,
   );
   When(
-    "writing to the contract function {string} with arguments {string} and {string} Ether and store the transaction hash in {string}",
+    "I call the write function {string} from the contract with arguments {string} and send {string} Ether",
     writeContractStep,
   );
 
   // generic steps
+  Then("I store the result in {string}", storeResultStep);
   Then(
-    "the value stored in {string} should be {string} {string}",
+    "I validate the value stored in {string} should be {string} {string}",
     resultComparisonStep,
   );
 };

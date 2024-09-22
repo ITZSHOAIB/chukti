@@ -145,6 +145,6 @@ export const resultComparisonStep = (
   compareValues(actualValue, parsedExpectedValue, comparisonType);
 
   world.log(
-    `Variable ${variableName} is ${comparisonType} ${parsedExpectedValue} as expected`,
+    `Variable ${variableName} with value ${actualValue} is ${comparisonType} ${parsedExpectedValue} as expected`,
   );
 };

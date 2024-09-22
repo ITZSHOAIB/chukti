@@ -9,31 +9,31 @@ Chukti provides a set of smart contract related step definitions that can be use
 
 - ### Initialize a contract
 ```gherkin
-Given a contract at path "path/to/contract.sol"
+Given I have a smart contract located at "path/to/contract.sol"
 ```
 [Read details](#initialize-1)
 
 - ### Deploy a contract
 ```gherkin
-Then deploy the contract with "arguments" arguments and "amount" Ether
+Then I deploy the smart contract with constructor arguments "args" and send "amount" Ether
 ```
 [Read details](#deploy-1)
 
 - ### Read from a contract
 ```gherkin
-When reading the contract function "functionName" with arguments "arguments" and store the result in "variableName"
+When I call the read function "functionName" from the contract with arguments "args"
 ```
 [Read details](#read-contract-1)
 
 - ### Write to a contract
 ```gherkin
-When writing to the contract function "functionName" with arguments "arguments" and "amount" Ether and store the transaction hash in "variableName"
+When I call the write function "functionName" from the contract with arguments "args" and send "amount" Ether
 ```
 [Read details](#write-contract-1)
 
 ## Detailed Step Definitions
 
-### :rocket: Given a contract at path "path/to/contract.sol" {#initialize-1}
+### :rocket: Given I have a smart contract located at "path/to/contract.sol" {#initialize-1}
 
 - **Purpose:**
 To load a smart contract from a given file path.
@@ -43,54 +43,52 @@ To load a smart contract from a given file path.
 
 ::: details **Example:**
 ```gherkin
-Given a contract at path "contracts/MyContract.sol"
+Given I have a smart contract located at "contracts/MyContract.sol"
 ```
 :::
 
-### :rocket: Then deploy the contract with "arguments" arguments and "amount" Ether {#deploy-1}
+### :rocket: Then I deploy the smart contract with constructor arguments "args" and send "amount" Ether {#deploy-1}
 
 - **Purpose:**
 To deploy a smart contract with given constructor arguments and initial Ether.
 
 - **Required Values:**
-    - `arguments`: Array of comma-separated Constructor arguments for the contract. Pass empty [] if no arguments required.
+    - `args`: Array of comma-separated Constructor arguments for the contract. Pass empty [] if no arguments required.
     - `amount`: Amount of Ether to send with the transaction.
 
 ::: details **Example:**
 ```gherkin
-Then deploy the contract with "[10, 'Bob']" arguments and "0" Ether
+Then I deploy the smart contract with constructor arguments "[10, 'Alice']" and send "0" Ether
 ```
 :::
 
-### :rocket: When reading the contract function "functionName" with arguments "arguments" and store the result in "variableName" {#read-contract-1}
+### :rocket: When I call the read function "functionName" from the contract with arguments "args" {#read-contract-1}
 
 - **Purpose:**
-To call a read-only function on the contract and store its return value.
+To call a read-only function on the contract with the given name.
 
 - **Required Values:**
     - `functionName`: The name of the contract function to call.
-    - `arguments`: Array of comma-separated Constructor arguments for the contract. Pass empty [] if no arguments required.
-    - `variableName`: Variable name to store the result.
+    - `args`: Array of comma-separated Constructor arguments for the contract. Pass empty [] if no arguments required.
 
 ::: details **Example:**
 ```gherkin
-When reading the contract function "getBalance" with arguments "Alice" and store the result in "aliceBalance"
+When I call the read function "getBalance" from the contract with arguments "['Alice']"
 ```
 :::
 
-### :rocket: When writing to the contract function "functionName" with arguments "arguments" and "amount" Ether and store the transaction hash in "variableName" {#write-contract-1}
+### :rocket: When I call the write function "functionName" from the contract with arguments "args" and send "amount" Ether {#write-contract-1}
 
 - **Purpose:**
-To call a state-changing function on the contract with specified arguments and Ether, and store the transaction hash.
+To call a state-changing (write) function on the contract with specified arguments and Ether.
 
 - **Required Values:**
     - `functionName`: The name of the contract function to call.
-    - `arguments`: Array of comma-separated Constructor arguments for the contract. Pass empty [] if no arguments required.
+    - `args`: Array of comma-separated Constructor arguments for the contract. Pass empty [] if no arguments required.
     - `amount`: Amount of Ether to send with the transaction.
-    - `variableName`: Variable name to store the result.
 
 ::: details **Example:**
 ```gherkin
-When writing to the contract function "transfer" with arguments "Bob,50" and "1" Ether and store the transaction hash in "transactionHash"
+When I call the write function "transfer" from the contract with arguments "['Bob',50]" and send "1" Ether
 ```
 :::

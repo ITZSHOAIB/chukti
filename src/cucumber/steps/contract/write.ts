@@ -5,7 +5,6 @@ export const writeContractStep = async (
   functionName: string,
   args: string,
   amount: string,
-  variableName: string,
 ) => {
   if (!world?.chukti?.deployedAddress) {
     throw new Error(
@@ -19,7 +18,7 @@ export const writeContractStep = async (
   const parsedArgs = args?.trim() ? JSON.parse(args) : [];
   const parsedAmount = amount?.trim() ? BigInt(amount) : undefined;
 
-  const transactionHash = await writeContract({
+  const result = await writeContract({
     contractAdress: contractAddress,
     contractAbi,
     functionName,
@@ -27,8 +26,12 @@ export const writeContractStep = async (
     amount: parsedAmount,
   });
 
-  world[variableName] = transactionHash;
   world.log(
-    `${functionName} called and the transaction hash: ${transactionHash} stored in ${variableName}`,
+    `${functionName} called and the transaction completed successfully`,
   );
+
+  if (result !== undefined && result !== null) {
+    world.chukti.lastResult = result;
+    world.log(`Function ${functionName} returned value: ${result}`);
+  }
 };

@@ -1,11 +1,7 @@
 import { world } from "@cucumber/cucumber";
 import { readContract } from "../../../viem/readContract.js";
 
-export const readContractStep = async (
-  functionName: string,
-  args: string,
-  variableName: string,
-) => {
+export const readContractStep = async (functionName: string, args: string) => {
   if (!world?.chukti?.deployedAddress) {
     throw new Error(
       "Deployed contract address not set. Please deploy a contract first",
@@ -24,8 +20,6 @@ export const readContractStep = async (
     args: parsedArgs,
   });
 
-  world[variableName] = data;
-  world.log(
-    `${functionName} called and the result: ${data} stored in ${variableName}`,
-  );
+  world.chukti.lastResult = data;
+  world.log(`${functionName} called and got the result: ${data}`);
 };

@@ -1,11 +1,6 @@
 # How to Write Tests with Chukti
 
-This guide will walk you through writing tests for a Solidity contract using Chukti. We will cover the following:
-1. Writing a Solidity contract.
-2. Creating a feature test file.
-3. Detailed explanations of the step definitions used.
-4. Running the test.
-5. Explanation.
+This guide will walk you through writing tests for a Solidity contract using Chukti.
 
 ## 1. Writing a Solidity Contract
 
@@ -58,18 +53,18 @@ Next, we will create a feature test file named `counter.feature` to test the `Co
 ```gherkin [features/counter.feature]
 Feature: Counter contract example
 
-  Scenario: Deploy and test the increment function
-    Given a contract at path "contracts/Counter.sol"
-    Then deploy the contract with "[10]" arguments and "0" Ether
+  Scenario: Deploy and interact with the Counter contract
+    Given I have a smart contract located at "contracts/Counter.sol"
+    Then I deploy the smart contract with constructor arguments "[10]" and send "0" Ether
 
-    When reading the contract function "getNumber" with arguments "[]" and store the result in "currentNumber"
-    Then the value stored in "currentNumber" should be "equal to" "10"
+    When I call the read function "getNumber" from the contract with arguments "[]"
+    Then I store the result in "currentNumber"
+    And I validate the value stored in "currentNumber" should be "equal to" "10"
 
-    When writing to the contract function "increment" with arguments "[]" and "0" Ether and store the transaction hash in "txHash"
-    Then the value stored in "txHash" should be "not equal to" "null"
-
-    When reading the contract function "getNumber" with arguments "[]" and store the result in "currentNumber"
-    Then the value stored in "currentNumber" should be "equal to" "11"
+    When I call the write function "increment" from the contract with arguments "[]" and send "0" Ether
+    And I call the read function "getNumber" from the contract with arguments "[]"
+    Then I store the result in "currentNumber"
+    And I validate the value stored in "currentNumber" should be "equal to" "11"
 ```
 :::
 
@@ -113,8 +108,7 @@ Let's break down what the feature test file is doing step by step:
 
 - **Increment the Value**:
     - The `increment` function is called to increase the value of `number` by `1`.
-    - The transaction hash of this operation is stored in the variable `txHash`.
-    - The test checks that `txHash` is not `null`, confirming that the transaction was successful.
+    - The test confirms that the transaction was successful.
 
 - **Read the Incremented Value**:
     - The `getNumber` function is called again to read the updated value of `number`.

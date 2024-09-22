@@ -9,13 +9,19 @@ Chukti provides a set of generic step definitions that can be used to perform co
 
 - ### Data validation
 ```gherkin
-Then the value stored in "variableName" should be "comparisonOperator" "expectedValue"
+Then I validate the value stored in "variableName" should be "comparisonOperator" "expectedValue"
 ```
 [Read details](#validation-1)
 
+- ### Store result
+```gherkin
+Then I store the result in "variableName"
+```
+[Read details](#store-result-1)
+
 ## Detailed Step Definitions
 
-### :rocket: Then the value stored in "variableName" should be "comparisonOperator" "expectedValue" {#validation-1}
+### :rocket: Then I validate the value stored in "variableName" should be "comparisonOperator" "expectedValue" {#validation-1}
 
 - **Purpose:**
 To compare the value stored in a variable with an expected value using a specified comparison operator.
@@ -27,7 +33,21 @@ To compare the value stored in a variable with an expected value using a specifi
 
 ::: details **Example:**
 ```gherkin
-Then the value stored in "currentNumber" should be "equal to" "10"
+And I validate the value stored in "currentNumber" should be "equal to" "10"
+```
+:::
+
+### :rocket: Then I store the result in "variableName" {#store-result-1}
+
+- **Purpose:**
+To store the result of the last operation in a specified variable.
+
+- **Required Values:**
+    - `variableName`: The name of the variable storing the value to be compared.
+
+::: details **Example:**
+```gherkin
+Then I store the result in "currentNumber"
 ```
 :::
 
