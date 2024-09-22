@@ -84,6 +84,7 @@ export default defineConfig({
     ["link", { rel: "icon", href: "/logo.svg", type: "image/svg+xml" }],
     ["meta", { name: "author", content: "Sohab Sk" }],
     ["meta", { property: "og:title", content: "Chukti" }],
+    ['meta', { property: 'og:image', content: 'https://chukti.vercel.app/chukti-og.png' }],
     [
       "meta",
       {
@@ -92,5 +93,6 @@ export default defineConfig({
       },
     ],
     ["meta", { name: "twitter:card", content: "summary_large_image" }],
+    ['meta', { name: 'twitter:image', content: 'https://chukti.vercel.app/chukti-og.png' }],
   ],
 });
