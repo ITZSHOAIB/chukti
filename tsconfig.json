@@ -1,9 +1,12 @@
 {
   "extends": "./tsconfig.base.json",
   "include": ["src"],
+  "exclude": ["src/internal/cli/"],
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./dist",
-    "module": "nodenext"
+    "module": "nodenext",
+    "declaration": true,
+    "declarationMap": true
   }
 }
