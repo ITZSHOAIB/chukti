@@ -4,4 +4,8 @@ export {
   deployContract,
 } from "./deployContract.js";
 export { type ReadContractParams, readContract } from "./readContract.js";
-export { type WriteContractParams, writeContract } from "./writeContract.js";
+export {
+  type WriteContractParams,
+  type WriteContractResult,
+  writeContract,
+} from "./writeContract.js";

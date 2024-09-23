@@ -9,6 +9,8 @@ Feature: Counter contract example
     And I validate the value stored in "currentNumber" should be "equal to" "10"
 
     When I call the write function "increment" from the contract with arguments "[]" and send "0" Ether
+    Then I validate the status of the last transaction is "success"
+
     And I call the read function "getNumber" from the contract with arguments "[]"
     Then I store the result in "currentNumber"
     And I validate the value stored in "currentNumber" should be "equal to" "11"

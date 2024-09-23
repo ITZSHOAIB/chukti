@@ -9,13 +9,18 @@ export interface WriteContractParams {
   amount?: bigint | undefined;
 }
 
+export interface WriteContractResult {
+  result: unknown;
+  txnHash: `0x${string}`;
+}
+
 export const writeContract = async ({
   contractAdress,
   contractAbi,
   functionName,
   args,
   amount,
-}: WriteContractParams): Promise<unknown> => {
+}: WriteContractParams): Promise<WriteContractResult> => {
   const testClient = getTestClient();
 
   const testAddresses = await testClient.getAddresses();
@@ -30,7 +35,7 @@ export const writeContract = async ({
     value: amount,
   });
 
-  await testClient.writeContract(request);
+  const txnHash = await testClient.writeContract(request);
 
-  return result;
+  return { result, txnHash };
 };

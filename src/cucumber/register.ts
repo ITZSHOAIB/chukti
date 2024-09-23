@@ -18,6 +18,7 @@ import { readContractStep } from "./steps/contract/read.js";
 import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
 import { storeResultStep } from "./steps/generic/storeResult.js";
+import { validateTxnStep } from "./steps/blockchain/validateTxn.js";
 
 export interface RegisterChuktiStepsParams {
   customHooks?: {
@@ -52,6 +53,10 @@ export const registerChuktiSteps = ({
   When(
     "I call the write function {string} from the contract with arguments {string} and send {string} Ether",
     writeContractStep,
+  );
+  Then(
+    "I validate the status of the last transaction is {string}",
+    validateTxnStep,
   );
 
   // generic steps
