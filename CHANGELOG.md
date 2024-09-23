@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.11
+
+### Patch Changes
+
+- [#32](https://github.com/ITZSHOAIB/chukti/pull/32) [`f7133c6`](https://github.com/ITZSHOAIB/chukti/commit/f7133c62a84462b6d17bd6f686e33e00749d679b) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - feat: transaction status validation step definition added
+
 ## 0.0.10
 
 ### Patch Changes
