@@ -50,22 +50,7 @@ contract Counter {
 Next, we will create a feature test file named `counter.feature` to test the `Counter` contract. This file will be located in the `features/` directory.
 
 ::: code-group
-```gherkin [features/counter.feature]
-Feature: Counter contract example
-
-  Scenario: Deploy and interact with the Counter contract
-    Given I have a smart contract located at "contracts/Counter.sol"
-    Then I deploy the smart contract with constructor arguments "[10]" and send "0" Ether
-
-    When I call the read function "getNumber" from the contract with arguments "[]"
-    Then I store the result in "currentNumber"
-    And I validate the value stored in "currentNumber" should be "equal to" "10"
-
-    When I call the write function "increment" from the contract with arguments "[]" and send "0" Ether
-    And I call the read function "getNumber" from the contract with arguments "[]"
-    Then I store the result in "currentNumber"
-    And I validate the value stored in "currentNumber" should be "equal to" "11"
-```
+<<< @/../sample-projects/common/features/counter.feature{gherkin}[features/counter.feature]
 :::
 
 ## 3. Running the test

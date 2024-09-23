@@ -12,15 +12,13 @@ export default defineConfig([
     treeshake: true,
   },
   {
-    entry: ["src/**/*.ts", "!src/internal/cli/**/*.ts"],
+    entry: ["src/**/*.ts", "!src/internal/cli/"],
     format: ["cjs", "esm"],
     tsconfig: "tsconfig.json",
     sourcemap: true,
-    minify: true,
-    dts: true,
+    dts: false,
     splitting: false,
     bundle: false,
-    treeshake: true,
     plugins: [
       {
         // https://github.com/egoist/tsup/issues/953#issuecomment-2132576167

@@ -16,20 +16,26 @@
   },
   "main": "dist/index.cjs",
   "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./cucumber": {
+      "types": "./dist/cucumber/index.d.ts",
       "import": "./dist/cucumber/index.js",
       "require": "./dist/cucumber/index.cjs"
     },
     "./local-blockchain": {
+      "types": "./dist/local-blockchain/index.d.ts",
       "import": "./dist/local-blockchain/index.js",
       "require": "./dist/local-blockchain/index.cjs"
     },
     "./viem": {
+      "types": "./dist/viem/index.d.ts",
       "import": "./dist/viem/index.js",
       "require": "./dist/viem/index.cjs"
     }
@@ -37,7 +43,7 @@
   "scripts": {
     "start": "ts-node src/internal/cli/index.ts",
     "build:local": "pnpm typecheck && pnpm build && pnpm link --global",
-    "build": "pnpm clean && tsup --config tsup.config.ts",
+    "build": "pnpm clean && tsup --config tsup.config.ts && tsc --emitDeclarationOnly",
     "clean": "rimraf dist",
     "changeset:version": "changeset version",
     "changeset:publish": "pnpm build && changeset publish",
@@ -78,10 +84,7 @@
     "typescript": "^5.1.6",
     "vitepress": "^1.3.4"
   },
-  "files": [
-    "dist",
-    "sample-projects"
-  ],
+  "files": ["dist", "sample-projects", "src"],
   "keywords": [
     "Smart contract test",
     "Smart contract test cucumber",

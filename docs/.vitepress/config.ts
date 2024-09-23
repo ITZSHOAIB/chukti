@@ -58,6 +58,10 @@ export default defineConfig({
               link: "/step-definitions/contracts",
             },
             {
+              text: "Blockchain",
+              link: "/step-definitions/blockchain",
+            },
+            {
               text: "Generic",
               link: "/step-definitions/generic",
             },

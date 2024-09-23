@@ -10,6 +10,7 @@ import {
   afterAll as defaultAfterAll,
   beforeAll as defaultBeforeAll,
 } from "./hooks.js";
+import { validateTxnStep } from "./steps/blockchain/validateTxn.js";
 import {
   deployContractStep,
   verifyContractPathStep,
@@ -52,6 +53,10 @@ export const registerChuktiSteps = ({
   When(
     "I call the write function {string} from the contract with arguments {string} and send {string} Ether",
     writeContractStep,
+  );
+  Then(
+    "I validate the status of the last transaction is {string}",
+    validateTxnStep,
   );
 
   // generic steps

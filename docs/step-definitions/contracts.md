@@ -92,3 +92,7 @@ To call a state-changing (write) function on the contract with specified argumen
 When I call the write function "transfer" from the contract with arguments "['Bob',50]" and send "1" Ether
 ```
 :::
+
+::: tip :bulb: Tip
+Wanna learn how to write test using these step definitions? Visit [How To Write Test page](/guide/how-to-write-test).
+:::

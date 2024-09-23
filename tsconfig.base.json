@@ -3,8 +3,6 @@
     "target": "ESNext",
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
-    "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
