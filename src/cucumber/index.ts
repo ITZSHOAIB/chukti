@@ -11,7 +11,10 @@ export {
 export { readContractStep } from "./steps/contract/read.js";
 export { writeContractStep } from "./steps/contract/write.js";
 
-export { validateTxnStep } from "./steps/blockchain/validateTxn.js";
+export {
+  TxnStatus,
+  validateTxnStep,
+} from "./steps/blockchain/validateTxn.js";
 
 export { resultComparisonStep } from "./steps/generic/dataComparison.js";
 export { storeResultStep } from "./steps/generic/storeResult.js";

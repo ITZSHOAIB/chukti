@@ -65,3 +65,7 @@ Here is a list of comparison operators that can be used in the generic step defi
 - `does not contain`: Checks if the actual value does not contain the expected value (for string comparisons).
 
 These operators allow you to perform a variety of comparisons to validate the results of your contract interactions.
+
+::: tip :bulb: Tip
+Wanna learn how to write test using these step definitions? Visit [How To Write Test page](/guide/how-to-write-test).
+:::

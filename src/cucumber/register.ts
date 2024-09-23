@@ -10,6 +10,7 @@ import {
   afterAll as defaultAfterAll,
   beforeAll as defaultBeforeAll,
 } from "./hooks.js";
+import { validateTxnStep } from "./steps/blockchain/validateTxn.js";
 import {
   deployContractStep,
   verifyContractPathStep,
@@ -18,7 +19,6 @@ import { readContractStep } from "./steps/contract/read.js";
 import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
 import { storeResultStep } from "./steps/generic/storeResult.js";
-import { validateTxnStep } from "./steps/blockchain/validateTxn.js";
 
 export interface RegisterChuktiStepsParams {
   customHooks?: {
