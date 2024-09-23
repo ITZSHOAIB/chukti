@@ -7,7 +7,12 @@ export const storeResultStep = async (variableName: string) => {
     );
   }
 
-  world[variableName] = world.chukti.lastResult;
+  if (!world?.userVariables) {
+    world.userVariables = {};
+  }
+
+  world.userVariables[variableName] = world.chukti.lastResult;
+
   world.log(
     `Stored the last result: ${world.chukti.lastResult} in ${variableName} variable`,
   );

@@ -133,7 +133,7 @@ export const resultComparisonStep = (
   comparisonType: ComparisonType,
   expectedValue: string,
 ) => {
-  const actualValue = world[variableName];
+  const actualValue = world?.userVariables?.[variableName];
   if (actualValue === undefined) {
     throw new Error(`No data found for variable ${variableName}`);
   }
