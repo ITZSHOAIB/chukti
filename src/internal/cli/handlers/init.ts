@@ -9,6 +9,7 @@ import { ProjectType } from "../../types.js";
 import { handleError } from "../../utils/errorHandler.js";
 import { ERROR_MESSAGES } from "../../utils/errorMessages.js";
 import { getProjectType } from "../../utils/projectConfig.js";
+import { version } from "../../../../package.json";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,9 +17,7 @@ const __dirname = path.dirname(__filename);
 export const initProject = async (argv: ArgumentsCamelCase) => {
   try {
     prompt.intro(
-      `${color.bgCyan(
-        color.black(" 🚀 Initializing a new Chukti project with Cucumber "),
-      )}`,
+      `${color.bgCyan(color.black(" 🚀 Initializing a new Chukti project "))}`,
     );
     const userChoices = await prompt.group(
       {
@@ -96,16 +95,30 @@ const proceedWithInitialization = async (
     spinner.start("📁 Initializing project...");
     fs.copySync(commonFilesDir, projectPath);
     fs.copySync(templateDir, projectPath);
+
+    const packageJsonPath = path.join(projectPath, "package.json");
+    const packageJson = fs.readJsonSync(packageJsonPath);
+    packageJson.devDependencies.chukti = `^${version}`;
+    fs.writeJsonSync(packageJsonPath, packageJson, { spaces: 2 });
+
     spinner.stop("✅ Project initialized successfully");
 
-    // Install the dependencies
-    spinner.start("📦 Installing chukti...");
-    execSync("npm install -D chukti", { stdio: "inherit" });
-    spinner.stop("✅ Chukti installed successfully");
+    const installationChoice = await prompt.confirm({
+      message: "Do you want to install the dependencies now?",
+      active: "Yes",
+      inactive: "No",
+      initialValue: true,
+    });
 
-    spinner.start("📦 Installing other dependencies...");
-    execSync("npm install", { stdio: "inherit" });
-    spinner.stop("✅ Dependencies installed successfully");
+    if (installationChoice) {
+      spinner.start("📦 Installing other dependencies...");
+      execSync("npm install", { stdio: "inherit" });
+      spinner.stop("✅ Dependencies installed successfully");
+    } else {
+      prompt.log.warn(
+        color.yellow("Run `npm install` to install the dependencies"),
+      );
+    }
 
     prompt.note("npx chukti --help    \nnpx chukti test", "Try running:");
 

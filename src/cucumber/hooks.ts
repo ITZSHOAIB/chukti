@@ -34,6 +34,7 @@ export const beforeAll = async () => {
 };
 
 export const afterAll = () => {
+  log("info", "Finished running tests. Stopping test environment...");
   if (blockchainManager) {
     blockchainManager.stopLocalBlockchain();
   }

@@ -1,4 +1,5 @@
 import color from "picocolors";
+import { log as promptLog } from "@clack/prompts";
 
 type LogType = "success" | "error" | "warning" | "info";
 
@@ -9,19 +10,19 @@ export const log = (type: LogType, message: string) => {
 
   switch (type) {
     case "success":
-      console.log(color.green(formattedMessage));
+      promptLog.success(color.green(formattedMessage));
       break;
     case "error":
-      console.error(color.red(formattedMessage));
+      promptLog.error(color.red(formattedMessage));
       break;
     case "warning":
-      console.warn(color.yellow(formattedMessage));
+      promptLog.warn(color.yellow(formattedMessage));
       break;
     case "info":
-      console.info(color.cyan(formattedMessage));
+      promptLog.info(color.cyan(formattedMessage));
       break;
     default:
-      console.log(formattedMessage);
+      promptLog.message(formattedMessage);
   }
 };
 
