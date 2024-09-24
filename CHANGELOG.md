@@ -1,5 +1,11 @@
 # chukti
 
+## 0.0.12
+
+### Patch Changes
+
+- [#36](https://github.com/ITZSHOAIB/chukti/pull/36) [`2b1d16f`](https://github.com/ITZSHOAIB/chukti/commit/2b1d16ff990193537b9dd8ca90f06c06363a1b0f) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - feat: chukti config changed from json to ts
+
 ## 0.0.11
 
 ### Patch Changes
