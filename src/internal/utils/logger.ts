@@ -1,5 +1,5 @@
-import color from "picocolors";
 import { log as promptLog } from "@clack/prompts";
+import color from "picocolors";
 
 type LogType = "success" | "error" | "warning" | "info";
 

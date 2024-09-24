@@ -5,11 +5,11 @@ import * as prompt from "@clack/prompts";
 import fs from "fs-extra";
 import color from "picocolors";
 import type { ArgumentsCamelCase } from "yargs";
+import { version } from "../../../../package.json";
 import { ProjectType } from "../../types.js";
 import { handleError } from "../../utils/errorHandler.js";
 import { ERROR_MESSAGES } from "../../utils/errorMessages.js";
 import { getProjectType } from "../../utils/projectConfig.js";
-import { version } from "../../../../package.json";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
