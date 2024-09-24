@@ -9,12 +9,12 @@ export const getProjectType = (projectPath: string): ProjectType | null => {
     return projectTypeCache.get(projectPath) ?? null;
   }
 
-  const configFilePath = path.join(projectPath, "chukti.config.json");
+  const configFilePath = path.join(projectPath, "chukti.config.ts");
   if (!fs.existsSync(configFilePath)) {
     return null;
   }
 
-  const config: ChuktiConfig = fs.readJsonSync(configFilePath);
+  const config: ChuktiConfig = require(configFilePath).default;
   projectTypeCache.set(projectPath, config.projectType);
   return config.projectType;
 };
