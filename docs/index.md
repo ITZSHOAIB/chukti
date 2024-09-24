@@ -1,5 +1,4 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
@@ -27,3 +26,10 @@ features:
     icon: 🤖
     details: Initialize new projects with a single command, streamlining your workflow and saving setup time.
 ---
+
+## Overview
+
+::: code-group
+<<< @/../sample-projects/common/features/counter.feature{gherkin}[features/counter.feature]
+<<< @/../sample-projects/common/contracts/Counter.sol{solidity}[contracts/counter.sol]
+:::

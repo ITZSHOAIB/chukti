@@ -4,45 +4,10 @@ This guide will walk you through writing tests for a Solidity contract using Chu
 
 ## 1. Writing a Solidity Contract
 
-Let's start by writing a simple Solidity contract named `Counter.sol`. Place this contract inside `contracts\` directory of your Chukti project.
+Let's start by writing a simple Solidity contract named `Counter.sol`. Place this contract inside `contracts/` directory of your Chukti project.
 
 ::: code-group
-```solidity [/contracts/Counter.sol]
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
-
-contract Counter {
-    uint256 private number;
-
-    constructor(uint256 _number) {
-        number = _number;
-    }
-
-    function getNumber() public view returns (uint256) {
-        return number;
-    }
-
-    function setNumber(uint256 _number) public {
-        number = _number;
-    }
-
-    function increment() public {
-        number++;
-    }
-
-    function decrement() public {
-        number--;
-    }
-
-    function resetNumber() public {
-        number = 0;
-    }
-
-    function incrementBy(uint256 _value) public {
-        number += _value;
-    }
-}
-```
+<<< @/../sample-projects/common/contracts/Counter.sol{solidity}[contracts/counter.sol]
 :::
 
 ## 2. Creating a Feature Test File
