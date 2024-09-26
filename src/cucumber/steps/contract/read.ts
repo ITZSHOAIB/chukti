@@ -1,11 +1,10 @@
 import { world } from "@cucumber/cucumber";
+import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
 import { readContract } from "../../../viem/readContract.js";
 
 export const readContractStep = async (functionName: string, args: string) => {
   if (!world?.chukti?.deployedAddress) {
-    throw new Error(
-      "Deployed contract address not set. Please deploy a contract first",
-    );
+    throw new Error(ERROR_MESSAGES.NO_CONTRACT_DEPLOYMENT_FOUND);
   }
 
   const contractAbi = world.chukti.contractAbi;

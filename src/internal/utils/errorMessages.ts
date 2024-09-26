@@ -10,4 +10,7 @@ export const ERROR_MESSAGES = {
     `Unsupported project type: ${projectType}. Please check chukti.config.json. Supported project types are [${Object.values(
       ProjectType,
     ).join(", ")}]`,
+
+  NO_CONTRACT_DEPLOYMENT_FOUND:
+    "No contract deployment found. Please deploy a contract first.",
 };

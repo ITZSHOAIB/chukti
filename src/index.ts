@@ -3,5 +3,5 @@ export * from "./local-blockchain/index.js";
 export * from "./viem/index.js";
 export * from "./config.js";
 
-import { ChuktiConfig, ProjectType } from "./internal/types.js";
-export { ChuktiConfig, ProjectType };
+import { ChuktiConfig, ProjectType, TxnStatus } from "./internal/types.js";
+export { ChuktiConfig, ProjectType, TxnStatus };

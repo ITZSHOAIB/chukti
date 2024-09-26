@@ -15,9 +15,14 @@ Given I have a smart contract located at "path/to/contract.sol"
 
 - ### Deploy a contract
 ```gherkin
-Then I deploy the smart contract with constructor arguments "args" and send "amount" Ether
+When I deploy the smart contract with constructor arguments "args" and send "amount" Ether
 ```
 [Read details](#deploy-1)
+
+```gherkin
+Then I validate the deployment status is "expectedStatus"
+```
+[Read details](#deploy-2)
 
 - ### Read from a contract
 ```gherkin
@@ -47,7 +52,7 @@ Given I have a smart contract located at "contracts/MyContract.sol"
 ```
 :::
 
-### :rocket: Then I deploy the smart contract with constructor arguments "args" and send "amount" Ether {#deploy-1}
+### :rocket: When I deploy the smart contract with constructor arguments "args" and send "amount" Ether {#deploy-1}
 
 - **Purpose:**
 To deploy a smart contract with given constructor arguments and initial Ether.
@@ -58,7 +63,21 @@ To deploy a smart contract with given constructor arguments and initial Ether.
 
 ::: details **Example:**
 ```gherkin
-Then I deploy the smart contract with constructor arguments "[10, 'Alice']" and send "0" Ether
+When I deploy the smart contract with constructor arguments "[10, 'Alice']" and send "0" Ether
+```
+:::
+
+### :rocket: Then I validate the deployment status is "expectedStatus" {#deploy-1}
+
+- **Purpose:**
+To validate the deployment status of the smart contract.
+
+- **Required Values:**
+    - `expectedStatus`: The expected status of the transaction. It can be either `success` or `reverted`.
+
+::: details **Example:**
+```gherkin
+Then I validate the deployment status is "success"
 ```
 :::
 
