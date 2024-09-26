@@ -67,7 +67,7 @@ When I deploy the smart contract with constructor arguments "[10, 'Alice']" and 
 ```
 :::
 
-### :rocket: Then I validate the deployment status is "expectedStatus" {#deploy-1}
+### :rocket: Then I validate the deployment status is "expectedStatus" {#deploy-2}
 
 - **Purpose:**
 To validate the deployment status of the smart contract.
