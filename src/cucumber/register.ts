@@ -13,9 +13,10 @@ import {
 import { validateTxnStep } from "./steps/blockchain/validateTxn.js";
 import {
   deployContractStep,
-  verifyContractPathStep,
+  validateDeploymentStep,
 } from "./steps/contract/deploy.js";
 import { readContractStep } from "./steps/contract/read.js";
+import { verifyContractPathStep } from "./steps/contract/verifyPath.js";
 import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
 import { storeResultStep } from "./steps/generic/storeResult.js";
@@ -42,10 +43,11 @@ export const registerChuktiSteps = ({
 
   // contract steps
   Given("I have a smart contract located at {string}", verifyContractPathStep);
-  Then(
+  When(
     "I deploy the smart contract with constructor arguments {string} and send {string} Ether",
     deployContractStep,
   );
+  Then("I validate the deployment status is {string}", validateDeploymentStep);
   When(
     "I call the read function {string} from the contract with arguments {string}",
     readContractStep,
