@@ -1,5 +1,8 @@
 # Chukti 🚀 (Not Stable)
 
+> **⚠️ Important Note: Chukti is a work in progress.**  
+> We are actively developing and improving the library. Some features may be incomplete or subject to change. We appreciate your understanding and welcome any feedback or contributions.
+
 **Chukti** is a powerful library designed to simplify the process of testing smart contracts using Cucumber's human-readable Gherkin syntax. With Chukti, you can write end-to-end tests for your smart contracts in a language that everyone on your team can understand, from developers to non-technical stakeholders.
 
 ## Features ✨
