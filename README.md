@@ -1,4 +1,4 @@
-# Chukti 🚀 (Not Stable)
+# Chukti 🚀
 
 > **⚠️ Important Note: Chukti is a work in progress.**  
 > We are actively developing and improving the library. Some features may be incomplete or subject to change. We appreciate your understanding and welcome any feedback or contributions.
