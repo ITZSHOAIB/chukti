@@ -16,6 +16,7 @@ export const writeContractStep = async (
 
   const parsedArgs = args?.trim() ? JSON.parse(args) : [];
   const parsedAmount = amount?.trim() ? BigInt(amount) : undefined;
+  const activeWalletAddress = world.chukti.activeWalletAddress;
 
   const { result, txnHash } = await writeContract({
     contractAdress: contractAddress,
@@ -23,6 +24,7 @@ export const writeContractStep = async (
     functionName,
     args: parsedArgs,
     amount: parsedAmount,
+    walletAddress: activeWalletAddress,
   });
 
   world.chukti.lastTxnHash = txnHash;

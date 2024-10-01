@@ -10,6 +10,10 @@ import {
   afterAll as defaultAfterAll,
   beforeAll as defaultBeforeAll,
 } from "./hooks.js";
+import {
+  setActiveWalletByAddressStep,
+  setActiveWalletByIndexStep,
+} from "./steps/blockchain/setActiveWallet.js";
 import { validateTxnStep } from "./steps/blockchain/validateTxn.js";
 import {
   deployContractStep,
@@ -20,10 +24,6 @@ import { verifyContractPathStep } from "./steps/contract/verifyPath.js";
 import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
 import { storeResultStep } from "./steps/generic/storeResult.js";
-import {
-  setActiveWalletByAddressStep,
-  setActiveWalletByIndexStep,
-} from "./steps/blockchain/setActiveWallet.js";
 
 export interface RegisterChuktiStepsParams {
   customHooks?: {

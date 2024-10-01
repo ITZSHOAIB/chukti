@@ -1,6 +1,6 @@
 import { getAddress, isAddress } from "viem";
-import { getTestClient } from "./internal/getTestClient.js";
 import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
+import { getTestClient } from "./internal/getTestClient.js";
 
 export interface GetTestWalletAddressParams {
   address?: string;
