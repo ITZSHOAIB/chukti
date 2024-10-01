@@ -20,6 +20,10 @@ import { verifyContractPathStep } from "./steps/contract/verifyPath.js";
 import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
 import { storeResultStep } from "./steps/generic/storeResult.js";
+import {
+  setActiveWalletByAddressStep,
+  setActiveWalletByIndexStep,
+} from "./steps/blockchain/setActiveWallet.js";
 
 export interface RegisterChuktiStepsParams {
   customHooks?: {
@@ -56,9 +60,19 @@ export const registerChuktiSteps = ({
     "I call the write function {string} from the contract with arguments {string} and send {string} Ether",
     writeContractStep,
   );
+
+  // blockchain steps
   Then(
     "I validate the status of the last transaction is {string}",
     validateTxnStep,
+  );
+  When(
+    "I set the active test wallet address to the address {string}",
+    setActiveWalletByAddressStep,
+  );
+  When(
+    "I set the active test wallet address to the index {int}",
+    setActiveWalletByIndexStep,
   );
 
   // generic steps

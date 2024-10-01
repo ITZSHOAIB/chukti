@@ -9,3 +9,7 @@ export {
   type WriteContractResult,
   writeContract,
 } from "./writeContract.js";
+export {
+  type GetTestWalletAddressParams,
+  getTestWalletAddress,
+} from "./getTestWalletAddress.js";
