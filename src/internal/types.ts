@@ -17,3 +17,14 @@ export enum ProjectType {
 export interface ChuktiConfig {
   projectType: ProjectType;
 }
+
+/**
+ * Enum representing the different statuses a transaction can have.
+ *
+ * - SUCCESS: The transaction was successful.
+ * - REVERTED: The transaction was reverted.
+ */
+export enum TxnStatus {
+  SUCCESS = "success",
+  REVERTED = "reverted",
+}

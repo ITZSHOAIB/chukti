@@ -6,7 +6,7 @@ export const getTxnReceipt = async ({
 }: { txnHash: `0x${string}` }): Promise<TransactionReceipt> => {
   const testClient = getTestClient();
 
-  return await testClient.getTransactionReceipt({
+  return await testClient.waitForTransactionReceipt({
     hash: txnHash,
   });
 };

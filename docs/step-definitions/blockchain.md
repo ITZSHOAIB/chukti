@@ -13,6 +13,17 @@ Then I validate the status of the last transaction is "expectedStatus"
 ```
 [Read details](#validate-transaction-status)
 
+- ### Switch wallet address
+```gherkin
+When I set the active test wallet address to the address "walletAddress"
+```
+[Read details](#switch-wallet-1)
+
+```gherkin
+When I set the active test wallet address to the index {index}
+```
+[Read details](#switch-wallet-2)
+
 ## Detailed Step Definitions
 
 ### :rocket: Then I validate the status of the last transaction is "expectedStatus" {#validate-transaction-status}
@@ -26,6 +37,34 @@ To validate the status of the last transaction.
 ::: details **Example:**
 ```gherkin
 Then I validate the status of the last transaction is "success"
+```
+:::
+
+### :rocket: When I set the active test wallet address to the address "walletAddress" {#switch-wallet-1}
+
+- **Purpose:**
+To set the active test wallet address to the specified wallet address.
+
+- **Required Values:**
+    - `walletAddress`: The wallet address to set as the active test wallet address.
+
+::: details **Example:**
+```gherkin
+When I set the active test wallet address to the address "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+```
+:::
+
+### :rocket: Given I set the active test wallet address to the index {index} {#switch-wallet-2}
+
+- **Purpose:**
+To set the active test wallet address to the specified index in the test client list.
+
+- **Required Values:**
+    - `index`: The index of the wallet address in the test client list.
+
+::: details **Example:**
+```gherkin
+Given I set the active test wallet address to the index 1
 ```
 :::
 

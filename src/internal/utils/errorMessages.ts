@@ -10,4 +10,11 @@ export const ERROR_MESSAGES = {
     `Unsupported project type: ${projectType}. Please check chukti.config.json. Supported project types are [${Object.values(
       ProjectType,
     ).join(", ")}]`,
+
+  NO_CONTRACT_DEPLOYMENT_FOUND:
+    "No contract deployment found. Please deploy a contract first.",
+  INVALID_WALLET_ADDRESS: (address: string) =>
+    `Provided address ${address} is not a valid test wallet address.`,
+  INVALID_WALLET_ADDRESS_INDEX: (index: number, maxIndex: number) =>
+    `Provided wallet index ${index} is invalid. Please provide an index between 0 and ${maxIndex}`,
 };

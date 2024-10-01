@@ -1,4 +1,5 @@
 import { world } from "@cucumber/cucumber";
+import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
 import { writeContract } from "../../../viem/writeContract.js";
 
 export const writeContractStep = async (
@@ -7,9 +8,7 @@ export const writeContractStep = async (
   amount: string,
 ) => {
   if (!world?.chukti?.deployedAddress) {
-    throw new Error(
-      "Deployed contract address not set. Please deploy a contract first",
-    );
+    throw new Error(ERROR_MESSAGES.NO_CONTRACT_DEPLOYMENT_FOUND);
   }
 
   const contractAbi = world.chukti.contractAbi;
@@ -17,6 +16,7 @@ export const writeContractStep = async (
 
   const parsedArgs = args?.trim() ? JSON.parse(args) : [];
   const parsedAmount = amount?.trim() ? BigInt(amount) : undefined;
+  const activeWalletAddress = world.chukti.activeWalletAddress;
 
   const { result, txnHash } = await writeContract({
     contractAdress: contractAddress,
@@ -24,6 +24,7 @@ export const writeContractStep = async (
     functionName,
     args: parsedArgs,
     amount: parsedAmount,
+    walletAddress: activeWalletAddress,
   });
 
   world.chukti.lastTxnHash = txnHash;

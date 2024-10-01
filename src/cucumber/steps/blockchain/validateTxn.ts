@@ -1,10 +1,6 @@
 import { world } from "@cucumber/cucumber";
+import { TxnStatus } from "../../../internal/types.js";
 import { getTxnReceipt } from "../../../viem/getTxnReceipt.js";
-
-export enum TxnStatus {
-  Success = "success",
-  Reverted = "reverted",
-}
 
 export const validateTxnStep = async (status: string) => {
   if (!world?.chukti?.lastTxnHash) {
@@ -17,19 +13,19 @@ export const validateTxnStep = async (status: string) => {
   const lastTxnHash = world.chukti.lastTxnHash;
 
   if (
-    expectedStatus !== TxnStatus.Success &&
-    expectedStatus !== TxnStatus.Reverted
+    expectedStatus !== TxnStatus.SUCCESS &&
+    expectedStatus !== TxnStatus.REVERTED
   ) {
     throw new Error(
-      `Invalid status value: ${status}, expected ${TxnStatus.Success} or ${TxnStatus.Reverted}`,
+      `Invalid status value: ${status}, expected ${TxnStatus.SUCCESS} or ${TxnStatus.REVERTED}`,
     );
   }
 
   const txnReceipt = await getTxnReceipt({ txnHash: lastTxnHash });
 
-  if (txnReceipt.status === TxnStatus.Success) {
+  if (txnReceipt.status === TxnStatus.SUCCESS) {
     world.log(`Transaction ${lastTxnHash} was successful as expected`);
-  } else if (txnReceipt.status === TxnStatus.Reverted) {
+  } else if (txnReceipt.status === TxnStatus.REVERTED) {
     world.log(`Transaction ${lastTxnHash} was reverted as expected`);
   } else {
     throw new Error(

@@ -1,25 +1,9 @@
 import assert from "node:assert";
-import path from "node:path";
 import { world } from "@cucumber/cucumber";
-import fs from "fs-extra";
+import { TxnStatus } from "../../../internal/types.js";
 import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
 import { getProjectType } from "../../../internal/utils/projectConfig.js";
 import { deployContract } from "../../../viem/deployContract.js";
-
-export const verifyContractPathStep = (contractPath: string) => {
-  if (!contractPath.toLowerCase().includes(".sol")) {
-    if (!fs.existsSync(path.resolve(process.cwd(), `${contractPath}.sol`))) {
-      throw new Error(`Contract file not found at: ${contractPath}`);
-    }
-  }
-
-  if (!world.chukti) {
-    world.chukti = {};
-  }
-
-  world.chukti.contractPath = contractPath;
-  world.log(`Contract exists at: ${JSON.stringify(contractPath)}`);
-};
 
 export const deployContractStep = async (args: string, amount: string) => {
   const projectType = getProjectType(process.cwd());
@@ -35,18 +19,55 @@ export const deployContractStep = async (args: string, amount: string) => {
 
   const parsedArgs = args?.trim() ? JSON.parse(args) : [];
   const parsedAmount = amount?.trim() ? BigInt(amount) : undefined;
+  const activeWalletAddress = world.chukti.activeWalletAddress;
 
-  // TODO: Implement cucumber datatable for args or other strategy to properly get array of arguments
-  const { deploymentStatus, deployedAddress, contractAbi } =
-    await deployContract({
-      contractPath,
-      args: parsedArgs,
-      amount: parsedAmount,
-    });
+  try {
+    // TODO: Implement cucumber datatable for args or other strategy to properly get array of arguments
+    const { deploymentStatus, deployedAddress, contractAbi } =
+      await deployContract({
+        contractPath,
+        args: parsedArgs,
+        amount: parsedAmount,
+        walletAddress: activeWalletAddress,
+      });
 
-  assert.strictEqual(deploymentStatus, "success");
+    world.log(`Contract deployment status: ${deploymentStatus}`);
+    world.chukti.deploymentStatus = deploymentStatus;
+    world.chukti.deployedAddress = deployedAddress;
+    world.chukti.contractAbi = contractAbi;
+  } catch (error) {
+    const errorDetails =
+      (error as { details?: string })?.details ?? "No details available";
+    world.log(`Contract deployment status: ${TxnStatus.REVERTED}`);
+    world.log(`Contract deployment error details: ${errorDetails}`);
+    world.chukti.deploymentStatus = TxnStatus.REVERTED;
+  }
+};
 
-  world.log(`Contract deployed successfully at: ${deployedAddress}`);
-  world.chukti.deployedAddress = deployedAddress;
-  world.chukti.contractAbi = contractAbi;
+export const validateDeploymentStep = async (status: string) => {
+  if (!world?.chukti?.deploymentStatus) {
+    throw new Error(
+      "No deployment status found to validate. Please deploy a contract first.",
+    );
+  }
+
+  const actualStatus = world.chukti.deploymentStatus;
+  const expectedStatus = status.toLowerCase();
+
+  if (
+    expectedStatus.toLowerCase() !== TxnStatus.SUCCESS &&
+    expectedStatus.toLowerCase() !== TxnStatus.REVERTED
+  ) {
+    throw new Error(
+      `Invalid status value: ${expectedStatus}, expected ${TxnStatus.SUCCESS} or ${TxnStatus.REVERTED}`,
+    );
+  }
+
+  assert.strictEqual(
+    actualStatus,
+    expectedStatus,
+    `Expected deployment status to be ${expectedStatus}, but got ${actualStatus}`,
+  );
+
+  world.log(`Contract deployment status is ${actualStatus} as expected`);
 };

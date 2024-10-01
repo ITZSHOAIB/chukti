@@ -4,17 +4,16 @@ export {
 } from "./register.js";
 export { beforeAll, afterAll } from "./hooks.js";
 
-export {
-  deployContractStep,
-  verifyContractPathStep,
-} from "./steps/contract/deploy.js";
+export { deployContractStep } from "./steps/contract/deploy.js";
+export { verifyContractPathStep } from "./steps/contract/verifyPath.js";
 export { readContractStep } from "./steps/contract/read.js";
 export { writeContractStep } from "./steps/contract/write.js";
 
+export { validateTxnStep } from "./steps/blockchain/validateTxn.js";
 export {
-  TxnStatus,
-  validateTxnStep,
-} from "./steps/blockchain/validateTxn.js";
+  setActiveWalletByAddressStep,
+  setActiveWalletByIndexStep,
+} from "./steps/blockchain/setActiveWallet.js";
 
 export { resultComparisonStep } from "./steps/generic/dataComparison.js";
 export { storeResultStep } from "./steps/generic/storeResult.js";
