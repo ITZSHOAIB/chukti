@@ -11,12 +11,14 @@ export const readContractStep = async (functionName: string, args: string) => {
   const contractAddress = world.chukti.deployedAddress;
 
   const parsedArgs = args?.trim() ? JSON.parse(args) : [];
+  const activeWalletAddress = world.chukti.activeWalletAddress;
 
   const data = await readContract({
     contractAdress: contractAddress,
     contractAbi,
     functionName,
     args: parsedArgs,
+    walletAddress: activeWalletAddress,
   });
 
   world.chukti.lastResult = data;

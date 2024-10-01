@@ -19,6 +19,7 @@ export const deployContractStep = async (args: string, amount: string) => {
 
   const parsedArgs = args?.trim() ? JSON.parse(args) : [];
   const parsedAmount = amount?.trim() ? BigInt(amount) : undefined;
+  const activeWalletAddress = world.chukti.activeWalletAddress;
 
   try {
     // TODO: Implement cucumber datatable for args or other strategy to properly get array of arguments
@@ -27,6 +28,7 @@ export const deployContractStep = async (args: string, amount: string) => {
         contractPath,
         args: parsedArgs,
         amount: parsedAmount,
+        walletAddress: activeWalletAddress,
       });
 
     world.log(`Contract deployment status: ${deploymentStatus}`);

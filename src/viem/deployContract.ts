@@ -1,6 +1,6 @@
 import path from "node:path";
 import fs from "fs-extra";
-import type { Abi, DeployContractParameters } from "viem";
+import { getAddress, type Abi, type DeployContractParameters } from "viem";
 import { ProjectType } from "../internal/types.js";
 import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
 import { getProjectType } from "../internal/utils/projectConfig.js";
@@ -16,12 +16,14 @@ export interface DeployParams {
   contractPath: string;
   args?: unknown[] | undefined;
   amount?: bigint | undefined;
+  walletAddress?: string | undefined;
 }
 
 export const deployContract = async ({
   contractPath,
   args,
   amount,
+  walletAddress,
 }: DeployParams): Promise<DeploymentResult> => {
   const projectType = getProjectType(process.cwd());
 
@@ -52,7 +54,9 @@ export const deployContract = async ({
 
   const testClient = getTestClient();
   const testAddresses = await testClient.getAddresses();
-  const deployerAddress = testAddresses[0];
+  const deployerAddress = walletAddress
+    ? getAddress(walletAddress)
+    : testAddresses[0];
 
   const transactionHash = await testClient.deployContract({
     abi: contract.abi as Abi,
