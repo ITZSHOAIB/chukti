@@ -1,4 +1,4 @@
-import { getAddress, type Abi } from "viem";
+import { type Abi, getAddress } from "viem";
 import { getTestClient } from "./internal/getTestClient.js";
 
 export interface WriteContractParams {

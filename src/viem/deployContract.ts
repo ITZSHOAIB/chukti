@@ -1,6 +1,6 @@
 import path from "node:path";
 import fs from "fs-extra";
-import { getAddress, type Abi, type DeployContractParameters } from "viem";
+import { type Abi, type DeployContractParameters, getAddress } from "viem";
 import { ProjectType } from "../internal/types.js";
 import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
 import { getProjectType } from "../internal/utils/projectConfig.js";
