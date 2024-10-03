@@ -1,4 +1,3 @@
-import { ProjectType } from "../internal/types.js";
 import { handleError } from "../internal/utils/errorHandler.js";
 import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
 import { log } from "../internal/utils/logger.js";
@@ -17,16 +16,12 @@ export const beforeAll = async () => {
       throw new Error(ERROR_MESSAGES.CHUKTI_PROJECT_NOT_FOUND);
     }
 
-    if (projectType === ProjectType.HardhatViem) {
+    if (projectType === "hardhat-viem") {
       blockchainManager = new HardhatManager();
       await blockchainManager.startHardhatBlockchain();
-    } else if (projectType === ProjectType.ForgeAnvil) {
+    } else if (projectType === "forge-anvil") {
       blockchainManager = new AnvilManager();
       await blockchainManager.startAnvilBlockchain();
-    } else {
-      throw new Error(
-        ERROR_MESSAGES.UNSUPPORTED_PROJECT_TYPE(projectType as string),
-      );
     }
   } catch (error) {
     handleError(error as Error);

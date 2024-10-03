@@ -1,24 +1,59 @@
 import path from "node:path";
 import fs from "fs-extra";
 import { type Abi, type DeployContractParameters, getAddress } from "viem";
-import { ProjectType } from "../internal/types.js";
 import { ERROR_MESSAGES } from "../internal/utils/errorMessages.js";
 import { getProjectType } from "../internal/utils/projectConfig.js";
 import { getTestClient } from "./internal/getTestClient.js";
 
-export interface DeploymentResult {
+/** Represents the result of a contract deployment. */
+export type DeploymentResult = {
+  /** The status of the deployment. It can be either "success" or "reverted". */
   deploymentStatus: "success" | "reverted";
+  /** The address of the deployed contract. */
   deployedAddress: `0x${string}` | null | undefined;
+  /** The ABI of the deployed contract. */
   contractAbi: Abi;
-}
+};
 
-export interface DeployParams {
+/** Parameters required for deploying a contract. */
+export type DeployParams = {
+  /** The path to the contract file. */
   contractPath: string;
+  /** The constructor arguments for the contract. */
   args?: unknown[] | undefined;
+  /** The amount of Ether to send with the deployment. */
   amount?: bigint | undefined;
+  /** The wallet address to use for deployment. */
   walletAddress?: string | undefined;
-}
+};
 
+/**
+ * Deploys a smart contract based on the provided parameters.
+ *
+ * This function handles the deployment of a smart contract by compiling it
+ * and deploying it to the blockchain. It supports different project types
+ * such as Hardhat and Forge.
+ *
+ * @param params {@link DeployParams}
+ * @param {string} params.contractPath - The path to the contract file.
+ * @param {unknown[]} [params.args] - The constructor arguments for the contract.
+ * @param {bigint} [params.amount] - The amount of Ether to send with the deployment.
+ * @param {string} [params.walletAddress] - The wallet address to use for deployment.
+ *
+ * @returns {Promise<DeploymentResult>} The result of the deployment, including
+ * the deployment status, deployed address, and contract ABI.
+ *
+ * @example
+ * import { deployContract } from "chukti";
+ *
+ * const result = await deployContract({
+ *   contractPath: "contracts/MyContract.sol",
+ *   args: ["arg1", 123],
+ *   amount: BigInt(1),
+ *   walletAddress: "0x1234567890abcdef1234567890abcdef12345678",
+ * });
+ * console.log(result);
+ */
 export const deployContract = async ({
   contractPath,
   args,
@@ -34,12 +69,12 @@ export const deployContract = async ({
   const contractName = path.basename(contractPath, ".sol");
   let compiledContractPath = "";
 
-  if (projectType === ProjectType.HardhatViem) {
+  if (projectType === "hardhat-viem") {
     compiledContractPath = path.resolve(
       process.cwd(),
       `artifacts/${contractPath}/${contractName}.json`,
     );
-  } else if (projectType === ProjectType.ForgeAnvil) {
+  } else if (projectType === "forge-anvil") {
     compiledContractPath = path.resolve(
       process.cwd(),
       `out/${contractName}.sol/${contractName}.json`,
@@ -62,7 +97,7 @@ export const deployContract = async ({
     abi: contract.abi as Abi,
     account: deployerAddress,
     bytecode:
-      projectType === ProjectType.HardhatViem
+      projectType === "hardhat-viem"
         ? contract.bytecode
         : contract.bytecode.object,
     args,

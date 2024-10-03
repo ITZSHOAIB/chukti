@@ -1,30 +1,24 @@
 /**
- * Enum representing the different types of projects that can be initialized.
- *
- * - HardhatViem: A TypeScript project with Hardhat + Viem.
- * - ForgeAnvil: A TypeScript project with Forge + Anvil.
+ * Type representing the supported project types in Chukti.
  */
-export enum ProjectType {
-  HardhatViem = "hardhat-viem",
-  ForgeAnvil = "forge-anvil",
-}
+export type ProjectType = "hardhat-viem" | "forge-anvil";
 
 /**
- * Interface representing the configuration for a Chukti project.
+ * Type representing the configuration for a Chukti project.
  *
  * @property {ProjectType} projectType - The type of project being initialized.
+ *
  */
-export interface ChuktiConfig {
+export type ChuktiConfig = {
   projectType: ProjectType;
-}
+};
+
+export const TxnStatus = {
+  success: "success",
+  reverted: "reverted",
+} as const;
 
 /**
- * Enum representing the different statuses a transaction can have.
- *
- * - SUCCESS: The transaction was successful.
- * - REVERTED: The transaction was reverted.
+ * Type representing the possible transaction statuses.
  */
-export enum TxnStatus {
-  SUCCESS = "success",
-  REVERTED = "reverted",
-}
+export type TxnStatusType = keyof typeof TxnStatus;

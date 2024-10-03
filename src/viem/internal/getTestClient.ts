@@ -10,11 +10,13 @@ import {
   walletActions,
 } from "viem";
 import { anvil, hardhat } from "viem/chains";
-import { ProjectType } from "../../internal/types.js";
+import type { ProjectType } from "../../internal/types.js";
 import { ERROR_MESSAGES } from "../../internal/utils/errorMessages.js";
 import { getProjectType } from "../../internal/utils/projectConfig.js";
 
-// TODO: Fine tune the return type
+/**
+ * The test client for the current project type.
+ */
 export type TestWalletClient = Client &
   TestActions &
   PublicActions &
@@ -22,6 +24,27 @@ export type TestWalletClient = Client &
 
 const testClientCache: Map<ProjectType, TestWalletClient> = new Map();
 
+/**
+ * Retrieves the test client for the current project type.
+ *
+ * This function returns a cached test client if available, or creates a new one
+ * based on the project type (e.g., Hardhat, Anvil).
+ *
+ * @returns The test client configured for the current project type. {@link TestWalletClient}
+ *
+ * @example
+ * import { getTestClient } from "chukti";
+ *
+ * const testClient = getTestClient();
+ * const data = await testClient.readContract({
+ *   address: contractAdress,
+ *   abi: contractAbi,
+ *   functionName,
+ *   args,
+ *   account: senderAddress,
+ * });
+ * return data;
+ */
 export const getTestClient = (): TestWalletClient => {
   const projectType = getProjectType(process.cwd());
 
@@ -37,14 +60,14 @@ export const getTestClient = (): TestWalletClient => {
   }
 
   const testClientConfigOverride: Partial<TestClientConfig> = {};
-  if (projectType === ProjectType.ForgeAnvil) {
+  if (projectType === "forge-anvil") {
     testClientConfigOverride.chain = anvil;
     testClientConfigOverride.mode = "anvil";
   }
 
   const testClient = createTestClient({
     chain: hardhat,
-    mode: "hardhat" as "anvil" | "hardhat" | "ganache",
+    mode: "hardhat",
     transport: http(),
     ...testClientConfigOverride,
   })

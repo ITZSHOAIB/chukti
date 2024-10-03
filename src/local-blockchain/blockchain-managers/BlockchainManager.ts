@@ -3,9 +3,9 @@ import spawn from "cross-spawn";
 import kill from "tree-kill";
 import { log } from "../../internal/utils/logger.js";
 
-interface BlockchainManagerOptions {
+type BlockchainManagerOptions = {
   confirmationMessage: string;
-}
+};
 
 export abstract class BlockchainManager {
   private blockchainProcess: ChildProcess | null = null;

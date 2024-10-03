@@ -25,13 +25,13 @@ import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
 import { storeResultStep } from "./steps/generic/storeResult.js";
 
-export interface RegisterChuktiStepsParams {
+export type RegisterChuktiStepsParams = {
   customHooks?: {
     beforeAll?: () => Promise<void> | void;
     afterAll?: () => Promise<void> | void;
   };
   defaultTimeout?: number;
-}
+};
 
 export const registerChuktiSteps = ({
   customHooks,
