@@ -1,17 +1,18 @@
 import assert from "node:assert";
 import { world } from "@cucumber/cucumber";
+import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
 import { type ParseValueType, parseValue } from "../../utils/parseValue.js";
 
-export enum ComparisonType {
-  EqualTo = "equal to",
-  NotEqualTo = "not equal to",
-  GreaterThan = "greater than",
-  GreaterThanOrEqualTo = "greater than or equal to",
-  LessThan = "less than",
-  LessThanOrEqualTo = "less than or equal to",
-  Contains = "contains",
-  DoesNotContain = "does not contain",
-}
+/** Compares the actual value of a variable with the expected value. */
+export type ComparisonType =
+  | "equal to"
+  | "not equal to"
+  | "greater than"
+  | "greater than or equal to"
+  | "less than"
+  | "less than or equal to"
+  | "contains"
+  | "does not contain";
 
 const compareValues = (
   actualValue: unknown,
@@ -19,21 +20,29 @@ const compareValues = (
   comparisonType: ComparisonType,
 ): void => {
   switch (comparisonType) {
-    case ComparisonType.EqualTo:
+    case "equal to":
       assert.strictEqual(
         actualValue,
         expectedValue,
-        `Expected ${actualValue} to be equal to ${expectedValue}`,
+        ERROR_MESSAGES.COMPARISON_ASSERTION_MESSAGE(
+          actualValue,
+          comparisonType,
+          expectedValue,
+        ),
       );
       break;
-    case ComparisonType.NotEqualTo:
+    case "not equal to":
       assert.notStrictEqual(
         actualValue,
         expectedValue,
-        `Expected ${actualValue} to be not equal to ${expectedValue}`,
+        ERROR_MESSAGES.COMPARISON_ASSERTION_MESSAGE(
+          actualValue,
+          comparisonType,
+          expectedValue,
+        ),
       );
       break;
-    case ComparisonType.GreaterThan:
+    case "greater than":
       if (
         (typeof actualValue === "number" &&
           typeof expectedValue === "number") ||
@@ -41,15 +50,19 @@ const compareValues = (
       ) {
         assert.ok(
           actualValue > expectedValue,
-          `Expected ${actualValue} to be greater than ${expectedValue}`,
+          ERROR_MESSAGES.COMPARISON_ASSERTION_MESSAGE(
+            actualValue,
+            comparisonType,
+            expectedValue,
+          ),
         );
       } else {
         throw new Error(
-          `Cannot compare non-numeric values using "${ComparisonType.GreaterThan}"`,
+          `Cannot compare non-numeric values using "${comparisonType}"`,
         );
       }
       break;
-    case ComparisonType.GreaterThanOrEqualTo:
+    case "greater than or equal to":
       if (
         (typeof actualValue === "number" &&
           typeof expectedValue === "number") ||
@@ -57,15 +70,19 @@ const compareValues = (
       ) {
         assert.ok(
           actualValue >= expectedValue,
-          `Expected ${actualValue} to be greater than or equal to ${expectedValue}`,
+          ERROR_MESSAGES.COMPARISON_ASSERTION_MESSAGE(
+            actualValue,
+            comparisonType,
+            expectedValue,
+          ),
         );
       } else {
         throw new Error(
-          `Cannot compare non-numeric values using "${ComparisonType.GreaterThanOrEqualTo}"`,
+          `Cannot compare non-numeric values using "${comparisonType}"`,
         );
       }
       break;
-    case ComparisonType.LessThan:
+    case "less than":
       if (
         (typeof actualValue === "number" &&
           typeof expectedValue === "number") ||
@@ -73,15 +90,19 @@ const compareValues = (
       ) {
         assert.ok(
           actualValue < expectedValue,
-          `Expected ${actualValue} to be less than ${expectedValue}`,
+          ERROR_MESSAGES.COMPARISON_ASSERTION_MESSAGE(
+            actualValue,
+            comparisonType,
+            expectedValue,
+          ),
         );
       } else {
         throw new Error(
-          `Cannot compare non-numeric values using "${ComparisonType.LessThan}"`,
+          `Cannot compare non-numeric values using "${comparisonType}"`,
         );
       }
       break;
-    case ComparisonType.LessThanOrEqualTo:
+    case "less than or equal to":
       if (
         (typeof actualValue === "number" &&
           typeof expectedValue === "number") ||
@@ -89,15 +110,19 @@ const compareValues = (
       ) {
         assert.ok(
           actualValue <= expectedValue,
-          `Expected ${actualValue} to be less than or equal to ${expectedValue}`,
+          ERROR_MESSAGES.COMPARISON_ASSERTION_MESSAGE(
+            actualValue,
+            comparisonType,
+            expectedValue,
+          ),
         );
       } else {
         throw new Error(
-          `Cannot compare non-numeric values using "${ComparisonType.LessThanOrEqualTo}"`,
+          `Cannot compare non-numeric values using "${comparisonType}"`,
         );
       }
       break;
-    case ComparisonType.Contains:
+    case "contains":
       if (
         typeof actualValue === "string" &&
         typeof expectedValue === "string"
@@ -110,7 +135,7 @@ const compareValues = (
         throw new Error(`"contains" comparison requires string values`);
       }
       break;
-    case ComparisonType.DoesNotContain:
+    case "does not contain":
       if (
         typeof actualValue === "string" &&
         typeof expectedValue === "string"
@@ -128,6 +153,18 @@ const compareValues = (
   }
 };
 
+/**
+ * Compares the actual value of a variable with the expected value.
+ *
+ * @param variableName - The name of the variable to compare.
+ * @param comparisonType - The type of comparison to perform.
+ * @param expectedValue - The expected value to compare against.
+ *
+ * @example
+ * import { resultComparisonStep } from "chukti";
+ *
+ * Then("I validate the value stored in {string} should be {string} {string}", resultComparisonStep);
+ */
 export const resultComparisonStep = (
   variableName: string,
   comparisonType: ComparisonType,

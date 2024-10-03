@@ -25,14 +25,43 @@ import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
 import { storeResultStep } from "./steps/generic/storeResult.js";
 
-export interface RegisterChuktiStepsParams {
+/**
+ * Parameters required for registering Chukti steps with the Cucumber framework.
+ */
+export type RegisterChuktiStepsParams = {
+  /**
+   * Custom hooks to be registered with the Cucumber framework.
+   */
   customHooks?: {
+    /**
+     * Custom beforeAll hook.
+     */
     beforeAll?: () => Promise<void> | void;
+    /**
+     * Custom afterAll hook.
+     */
     afterAll?: () => Promise<void> | void;
   };
+  /**
+   * The default timeout for the steps.
+   */
   defaultTimeout?: number;
-}
+};
 
+/**
+ * Registers the Chukti steps with the Cucumber framework.
+ *
+ * This function registers all the Chukti steps with the Cucumber framework.
+ * It also allows custom hooks to be registered.
+ *
+ * @param params {@link RegisterChuktiStepsParams}
+ *
+ * @example
+ * import { registerChuktiSteps } from "chukti";
+ *
+ * // Register the Chukti steps with the Cucumber framework
+ * registerChuktiSteps({});
+ */
 export const registerChuktiSteps = ({
   customHooks,
   defaultTimeout = 30 * 1_000,

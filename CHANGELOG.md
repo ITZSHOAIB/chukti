@@ -1,5 +1,13 @@
 # chukti
 
+## 0.0.13
+
+### Patch Changes
+
+- [#42](https://github.com/ITZSHOAIB/chukti/pull/42) [`867442d`](https://github.com/ITZSHOAIB/chukti/commit/867442de247dd1aaf94930ec616a0516efb6d76b) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - feat: revamping deploy contract steps
+
+- [#42](https://github.com/ITZSHOAIB/chukti/pull/42) [`867442d`](https://github.com/ITZSHOAIB/chukti/commit/867442de247dd1aaf94930ec616a0516efb6d76b) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - feat: switch wallet address for blockchain interactions
+
 ## 0.0.12
 
 ### Patch Changes

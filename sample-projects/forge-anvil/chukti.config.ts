@@ -1,5 +1,5 @@
-import { defineConfig, ProjectType } from "chukti";
+import { defineConfig } from "chukti";
 
 export default defineConfig({
-  projectType: ProjectType.ForgeAnvil,
+  projectType: "forge-anvil",
 });

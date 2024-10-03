@@ -6,7 +6,7 @@ import fs from "fs-extra";
 import color from "picocolors";
 import type { ArgumentsCamelCase } from "yargs";
 import { version } from "../../../../package.json";
-import { ProjectType } from "../../types.js";
+import type { ProjectType } from "../../types.js";
 import { handleError } from "../../utils/errorHandler.js";
 import { ERROR_MESSAGES } from "../../utils/errorMessages.js";
 import { getProjectType } from "../../utils/projectConfig.js";
@@ -38,11 +38,11 @@ export const initProject = async (argv: ArgumentsCamelCase) => {
             )}:`,
             options: [
               {
-                value: ProjectType.HardhatViem,
+                value: "hardhat-viem" as ProjectType,
                 label: "A TypeScript project with Hardhat + Viem",
               },
               {
-                value: ProjectType.ForgeAnvil,
+                value: "forge-anvil" as ProjectType,
                 label: "A Typescript project with Forge + Anvil",
                 hint: "should be installed manually",
               },
@@ -69,14 +69,14 @@ export const initProject = async (argv: ArgumentsCamelCase) => {
       throw new Error(ERROR_MESSAGES.CHUKTI_PROJECT_ALREADY_EXISTS);
     }
 
-    await proceedWithInitialization(projectType as string, projectPath);
+    await proceedWithInitialization(projectType as ProjectType, projectPath);
   } catch (error) {
     handleError(error as Error);
   }
 };
 
 const proceedWithInitialization = async (
-  projectType: string,
+  projectType: ProjectType,
   projectPath: string,
 ) => {
   try {

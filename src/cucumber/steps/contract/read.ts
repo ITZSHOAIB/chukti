@@ -2,6 +2,17 @@ import { world } from "@cucumber/cucumber";
 import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
 import { readContract } from "../../../viem/readContract.js";
 
+/**
+ * Reads the contract function using the provided arguments.
+ *
+ * @param functionName - The name of the function to call.
+ * @param args - The arguments to pass to the contract function.
+ *
+ * @example
+ * import { readContractStep } from "chukti";
+ *
+ * When("I call the read function {string} from the contract with arguments {string}", readContractStep);
+ */
 export const readContractStep = async (functionName: string, args: string) => {
   if (!world?.chukti?.deployedAddress) {
     throw new Error(ERROR_MESSAGES.NO_CONTRACT_DEPLOYMENT_FOUND);

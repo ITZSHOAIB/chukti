@@ -3,9 +3,9 @@ import spawn from "cross-spawn";
 import kill from "tree-kill";
 import { log } from "../../internal/utils/logger.js";
 
-interface BlockchainManagerOptions {
+type BlockchainManagerOptions = {
   confirmationMessage: string;
-}
+};
 
 export abstract class BlockchainManager {
   private blockchainProcess: ChildProcess | null = null;
@@ -46,6 +46,7 @@ export abstract class BlockchainManager {
     });
   }
 
+  /** Stops the local blockchain. */
   public stopLocalBlockchain() {
     if (this.blockchainProcess) {
       if (this.blockchainProcess?.pid) {

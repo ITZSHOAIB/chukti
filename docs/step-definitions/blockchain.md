@@ -50,7 +50,7 @@ To set the active test wallet address to the specified wallet address.
 
 ::: details **Example:**
 ```gherkin
-When I set the active test wallet address to the address "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+When I set the active test wallet address to the address "0x1234567890abcdef1234567890abcdef12345678"
 ```
 :::
 
