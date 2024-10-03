@@ -7,6 +7,12 @@ import { HardhatManager } from "../local-blockchain/blockchain-managers/HardhatM
 
 let blockchainManager: HardhatManager | AnvilManager;
 
+/**
+ * A hook that runs before all tests.
+ *
+ * This hook compiles all the contracts
+ * And starts the test environment based on the project type.
+ */
 export const beforeAll = async () => {
   try {
     log("info", "🚀 Starting test environment...");
@@ -28,6 +34,11 @@ export const beforeAll = async () => {
   }
 };
 
+/**
+ * A hook that runs after all tests.
+ *
+ * This hook stops the test environment.
+ */
 export const afterAll = () => {
   log("info", "Finished running tests. Stopping test environment...");
   if (blockchainManager) {

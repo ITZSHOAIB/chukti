@@ -35,13 +35,10 @@ export type DeployParams = {
  * such as Hardhat and Forge.
  *
  * @param params {@link DeployParams}
- * @param {string} params.contractPath - The path to the contract file.
- * @param {unknown[]} [params.args] - The constructor arguments for the contract.
- * @param {bigint} [params.amount] - The amount of Ether to send with the deployment.
- * @param {string} [params.walletAddress] - The wallet address to use for deployment.
  *
- * @returns {Promise<DeploymentResult>} The result of the deployment, including
+ * @returns The result of the deployment, including
  * the deployment status, deployed address, and contract ABI.
+ * {@link DeploymentResult}
  *
  * @example
  * import { deployContract } from "chukti";

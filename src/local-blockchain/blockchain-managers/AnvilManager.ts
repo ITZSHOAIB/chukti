@@ -47,7 +47,8 @@ export class AnvilManager extends BlockchainManager {
    *
    * This function starts the Anvil blockchain using the `anvil` command.
    *
-   * @param {number} [timeout=30000] - The timeout for starting the blockchain.
+   * @param timeout - The timeout for starting the blockchain.
+   * @default 30_000
    */
   public async startAnvilBlockchain(timeout = 30_000): Promise<void> {
     this.compileProject();

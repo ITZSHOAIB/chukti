@@ -6,13 +6,17 @@ export type ProjectType = "hardhat-viem" | "forge-anvil";
 /**
  * Type representing the configuration for a Chukti project.
  *
- * @property {ProjectType} projectType - The type of project being initialized.
+ * @property projectType {@link ProjectType} - The type of project being initialized.
  *
  */
 export type ChuktiConfig = {
   projectType: ProjectType;
 };
 
+/**
+ * Type representing the possible transaction statuses.
+ * @readonly
+ */
 export const TxnStatus = {
   success: "success",
   reverted: "reverted",

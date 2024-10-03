@@ -3,6 +3,7 @@ import { world } from "@cucumber/cucumber";
 import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
 import { type ParseValueType, parseValue } from "../../utils/parseValue.js";
 
+/** Compares the actual value of a variable with the expected value. */
 export type ComparisonType =
   | "equal to"
   | "not equal to"
@@ -152,6 +153,18 @@ const compareValues = (
   }
 };
 
+/**
+ * Compares the actual value of a variable with the expected value.
+ *
+ * @param variableName - The name of the variable to compare.
+ * @param comparisonType - The type of comparison to perform.
+ * @param expectedValue - The expected value to compare against.
+ *
+ * @example
+ * import { resultComparisonStep } from "chukti";
+ *
+ * Then("I validate the value stored in {string} should be {string} {string}", resultComparisonStep);
+ */
 export const resultComparisonStep = (
   variableName: string,
   comparisonType: ComparisonType,

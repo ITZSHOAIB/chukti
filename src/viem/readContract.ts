@@ -24,11 +24,6 @@ export type ReadContractParams = {
  * It uses the test client to interact with the blockchain.
  *
  * @param params {@link ReadContractParams}
- * @param {`0x${string}`} params.contractAdress - The contract address to read from.
- * @param {Abi} params.contractAbi - The contract ABI.
- * @param {string} params.functionName - The function name to call.
- * @param {unknown[]} [params.args] - The arguments to pass to the function.
- * @param {string} [params.walletAddress] - The wallet address to use for the transaction.
  *
  * @returns The data returned by the contract function. {@link ReadContractReturnType}
  *

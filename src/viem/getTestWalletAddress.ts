@@ -17,8 +17,6 @@ export type GetTestWalletAddressParams = {
  * provided address or index. If both are provided, the index takes precedence.
  *
  * @param params {@link GetTestWalletAddressParams}
- * @param {string} [params.address] - The wallet address to set as the active test wallet address.
- * @param {number} [params.index] - The index of the wallet address in the test client list.
  *
  * @returns `0x${string}` The resolved wallet address.
  *

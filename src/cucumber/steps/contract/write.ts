@@ -2,6 +2,18 @@ import { world } from "@cucumber/cucumber";
 import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
 import { writeContract } from "../../../viem/writeContract.js";
 
+/**
+ * Writes to the contract function using the provided arguments.
+ *
+ * @param functionName - The name of the function to call.
+ * @param args - The arguments to pass to the contract function.
+ * @param amount - The amount of Ether to send with the transaction.
+ *
+ * @example
+ * import { writeContractStep } from "chukti";
+ *
+ * When("I call the write function {string} from the contract with arguments {string} and send {string} Ether", writeContractStep);
+ */
 export const writeContractStep = async (
   functionName: string,
   args: string,

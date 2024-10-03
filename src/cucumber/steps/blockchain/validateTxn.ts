@@ -2,6 +2,16 @@ import { world } from "@cucumber/cucumber";
 import { TxnStatus, type TxnStatusType } from "../../../internal/types.js";
 import { getTxnReceipt } from "../../../viem/getTxnReceipt.js";
 
+/**
+ * Validates the status of the last transaction performed.
+ *
+ * @param status - The expected status of the last transaction.
+ *
+ * @example
+ * import { validateTxnStep } from "chukti";
+ *
+ * Then("I validate the status of the last transaction is {string}", validateTxnStep);
+ */
 export const validateTxnStep = async (status: string) => {
   if (!world?.chukti?.lastTxnHash) {
     throw new Error(

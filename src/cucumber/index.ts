@@ -4,7 +4,10 @@ export {
 } from "./register.js";
 export { beforeAll, afterAll } from "./hooks.js";
 
-export { deployContractStep } from "./steps/contract/deploy.js";
+export {
+  deployContractStep,
+  validateDeploymentStep,
+} from "./steps/contract/deploy.js";
 export { verifyContractPathStep } from "./steps/contract/verifyPath.js";
 export { readContractStep } from "./steps/contract/read.js";
 export { writeContractStep } from "./steps/contract/write.js";

@@ -5,6 +5,17 @@ import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
 import { getProjectType } from "../../../internal/utils/projectConfig.js";
 import { deployContract } from "../../../viem/deployContract.js";
 
+/**
+ * Deploys a contract using the provided arguments and amount.
+ *
+ * @param args - The arguments to pass to the contract constructor.
+ * @param amount - The amount of Ether to send with the deployment.
+ *
+ * @example
+ * import { deployContractStep } from "chukti";
+ *
+ * When("I deploy the smart contract with constructor arguments {string} and send {string} Ether", deployContractStep);
+ */
 export const deployContractStep = async (args: string, amount: string) => {
   const projectType = getProjectType(process.cwd());
   if (projectType === null) {
@@ -44,6 +55,16 @@ export const deployContractStep = async (args: string, amount: string) => {
   }
 };
 
+/**
+ * Validates the contract deployment status.
+ *
+ * @param status - The expected contract deployment status.
+ *
+ * @example
+ * import { validateDeploymentStep } from "chukti";
+ *
+ * Then("I validate the deployment status is {string}", validateDeploymentStep);
+ */
 export const validateDeploymentStep = async (status: string) => {
   if (!world?.chukti?.deploymentStatus) {
     throw new Error(

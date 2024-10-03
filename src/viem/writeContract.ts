@@ -34,12 +34,6 @@ export type WriteContractResult = {
  * It uses the test client to interact with the blockchain.
  *
  * @param params {@link WriteContractParams}
- * @param {`0x${string}`} params.contractAdress - The contract address to write to.
- * @param {Abi} params.contractAbi - The contract ABI.
- * @param {string} params.functionName - The function name to call.
- * @param {unknown[]} [params.args] - The arguments to pass to the function.
- * @param {bigint} [params.amount] - The amount to send with the transaction.
- * @param {string} [params.walletAddress] - The wallet address to use for the transaction.
  *
  * @returns The result of the contract function and the transaction hash. {@link WriteContractResult}
  *

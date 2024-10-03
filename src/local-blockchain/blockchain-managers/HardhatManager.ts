@@ -49,7 +49,8 @@ export class HardhatManager extends BlockchainManager {
    *
    * This function starts the Hardhat blockchain using the `npx hardhat node` command.
    *
-   * @param {number} [timeout=30_000] - The timeout for starting the blockchain.
+   * @param timeout - The timeout for starting the blockchain.
+   * @default 30_000
    */
   public async startHardhatBlockchain(timeout = 30_000): Promise<void> {
     this.compileProject();
