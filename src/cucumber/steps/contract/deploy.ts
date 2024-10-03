@@ -1,10 +1,21 @@
 import assert from "node:assert";
 import { world } from "@cucumber/cucumber";
-import { TxnStatus } from "../../../internal/types.js";
+import { TxnStatus, type TxnStatusType } from "../../../internal/types.js";
 import { ERROR_MESSAGES } from "../../../internal/utils/errorMessages.js";
 import { getProjectType } from "../../../internal/utils/projectConfig.js";
 import { deployContract } from "../../../viem/deployContract.js";
 
+/**
+ * Deploys a contract using the provided arguments and amount.
+ *
+ * @param args - The arguments to pass to the contract constructor.
+ * @param amount - The amount of Ether to send with the deployment.
+ *
+ * @example
+ * import { deployContractStep } from "chukti";
+ *
+ * When("I deploy the smart contract with constructor arguments {string} and send {string} Ether", deployContractStep);
+ */
 export const deployContractStep = async (args: string, amount: string) => {
   const projectType = getProjectType(process.cwd());
   if (projectType === null) {
@@ -38,12 +49,22 @@ export const deployContractStep = async (args: string, amount: string) => {
   } catch (error) {
     const errorDetails =
       (error as { details?: string })?.details ?? "No details available";
-    world.log(`Contract deployment status: ${TxnStatus.REVERTED}`);
+    world.log(`Contract deployment status: ${TxnStatus.reverted}`);
     world.log(`Contract deployment error details: ${errorDetails}`);
-    world.chukti.deploymentStatus = TxnStatus.REVERTED;
+    world.chukti.deploymentStatus = TxnStatus.reverted;
   }
 };
 
+/**
+ * Validates the contract deployment status.
+ *
+ * @param status - The expected contract deployment status.
+ *
+ * @example
+ * import { validateDeploymentStep } from "chukti";
+ *
+ * Then("I validate the deployment status is {string}", validateDeploymentStep);
+ */
 export const validateDeploymentStep = async (status: string) => {
   if (!world?.chukti?.deploymentStatus) {
     throw new Error(
@@ -52,14 +73,11 @@ export const validateDeploymentStep = async (status: string) => {
   }
 
   const actualStatus = world.chukti.deploymentStatus;
-  const expectedStatus = status.toLowerCase();
+  const expectedStatus = status.toLowerCase() as TxnStatusType;
 
-  if (
-    expectedStatus.toLowerCase() !== TxnStatus.SUCCESS &&
-    expectedStatus.toLowerCase() !== TxnStatus.REVERTED
-  ) {
+  if (!Object.values(TxnStatus).includes(expectedStatus)) {
     throw new Error(
-      `Invalid status value: ${expectedStatus}, expected ${TxnStatus.SUCCESS} or ${TxnStatus.REVERTED}`,
+      `Invalid status value: ${expectedStatus}, expected ${TxnStatus.success} or ${TxnStatus.reverted}`,
     );
   }
 

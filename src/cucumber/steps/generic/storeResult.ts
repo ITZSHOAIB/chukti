@@ -1,5 +1,15 @@
 import { world } from "@cucumber/cucumber";
 
+/**
+ * Stores the last result in a variable.
+ *
+ * @param variableName - The name of the variable to store the result in.
+ *
+ * @example
+ * import { storeResultStep } from "chukti";
+ *
+ * Then("I store the result in {string}", storeResultStep);
+ */
 export const storeResultStep = async (variableName: string) => {
   if (!world.chukti?.lastResult) {
     throw new Error(

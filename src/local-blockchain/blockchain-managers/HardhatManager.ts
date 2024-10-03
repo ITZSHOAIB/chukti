@@ -3,6 +3,18 @@ import commandExists from "command-exists";
 import { log } from "../../internal/utils/logger.js";
 import { BlockchainManager } from "./BlockchainManager.js";
 
+/**
+ * A class that manages the Hardhat blockchain.
+ *
+ * This class extends the {@link BlockchainManager} class and provides
+ * functionality to manage the Hardhat blockchain.
+ *
+ * @example
+ * import { HardhatManager } from "chukti";
+ *
+ * const hardhatManager = new HardhatManager();
+ * hardhatManager.startHardhatBlockchain();
+ */
 export class HardhatManager extends BlockchainManager {
   constructor() {
     super({
@@ -10,6 +22,11 @@ export class HardhatManager extends BlockchainManager {
     });
   }
 
+  /**
+   * Compiles the Hardhat project.
+   *
+   * This function compiles the smart contracts in the Hardhat project.
+   */
   compileProject(): void {
     try {
       log("info", "Compiling smart contracts...");
@@ -27,6 +44,14 @@ export class HardhatManager extends BlockchainManager {
     }
   }
 
+  /**
+   * Starts the Hardhat blockchain.
+   *
+   * This function starts the Hardhat blockchain using the `npx hardhat node` command.
+   *
+   * @param timeout - The timeout for starting the blockchain.
+   * @default 30_000
+   */
   public async startHardhatBlockchain(timeout = 30_000): Promise<void> {
     this.compileProject();
 
