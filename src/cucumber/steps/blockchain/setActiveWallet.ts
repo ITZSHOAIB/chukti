@@ -38,3 +38,19 @@ export const setActiveWalletByIndexStep = async (index: number) => {
     `Active test wallet address set to address at index ${index}: ${testWallet}`,
   );
 };
+
+/**
+ * Fetches the wallet address by the provided index
+ * @param index- The index of the test wallet address to set as active.
+ * 
+ * @example
+ * import { fetchWalletByIndexStep } from "chukti";
+ * When("I fetch the wallet address at index {int}", fetchWalletByIndexStep);
+ */
+
+export const fetchWalletByIndexStep = async (index: number) => {
+  const testWallet = await getTestWalletAddress({ index });
+
+  // Log the fetched wallet without setting it as active
+  world.log(`Fetched wallet address at index ${index}: ${testWallet}`);
+};
