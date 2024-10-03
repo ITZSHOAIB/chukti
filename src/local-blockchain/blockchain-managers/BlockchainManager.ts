@@ -46,6 +46,7 @@ export abstract class BlockchainManager {
     });
   }
 
+  /** Stops the local blockchain. */
   public stopLocalBlockchain() {
     if (this.blockchainProcess) {
       if (this.blockchainProcess?.pid) {
