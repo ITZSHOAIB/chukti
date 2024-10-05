@@ -42,7 +42,7 @@ export const setActiveWalletByIndexStep = async (index: number) => {
 /**
  * Fetches the wallet address by the provided index
  * @param index- The index of the test wallet address to set as active.
- * 
+ *
  * @example
  * import { fetchWalletByIndexStep } from "chukti";
  * When("I fetch the wallet address at index {int}", fetchWalletByIndexStep);
@@ -50,8 +50,8 @@ export const setActiveWalletByIndexStep = async (index: number) => {
 
 export const fetchWalletByIndexStep = async (index: number) => {
   const testWallet = await getTestWalletAddress({ index });
-  if(!world.chukti){
-    world.chukti ={};
+  if (!world.chukti) {
+    world.chukti = {};
   }
   world.chukti.lastResult = testWallet;
 
