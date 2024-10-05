@@ -14,6 +14,7 @@ import {
   setActiveWalletByAddressStep,
   setActiveWalletByIndexStep,
 } from "./steps/blockchain/setActiveWallet.js";
+import { fetchWalletByIndexStep } from "./steps/blockchain/setActiveWallet.js";
 import { validateTxnStep } from "./steps/blockchain/validateTxn.js";
 import {
   deployContractStep,
@@ -24,7 +25,6 @@ import { verifyContractPathStep } from "./steps/contract/verifyPath.js";
 import { writeContractStep } from "./steps/contract/write.js";
 import { resultComparisonStep } from "./steps/generic/dataComparison.js";
 import { storeResultStep } from "./steps/generic/storeResult.js";
-import { fetchWalletByIndexStep } from "./steps/blockchain/setActiveWallet.js";
 
 /**
  * Parameters required for registering Chukti steps with the Cucumber framework.
@@ -97,10 +97,7 @@ export const registerChuktiSteps = ({
     validateTxnStep,
   );
 
-  When(
-    "I fetch the wallet address at index {int}",
-    fetchWalletByIndexStep
-  );
+  When("I fetch the wallet address at index {int}", fetchWalletByIndexStep);
   When(
     "I set the active test wallet address to the address {string}",
     setActiveWalletByAddressStep,
