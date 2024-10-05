@@ -24,6 +24,11 @@ When I set the active test wallet address to the index {index}
 ```
 [Read details](#switch-wallet-2)
 
+```gherkin
+When I fetch the wallet address at index {index}
+```
+[Read details](#fetch-wallet-index)
+
 ## Detailed Step Definitions
 
 ### :rocket: Then I validate the status of the last transaction is "expectedStatus" {#validate-transaction-status}
@@ -65,6 +70,19 @@ To set the active test wallet address to the specified index in the test client 
 ::: details **Example:**
 ```gherkin
 Given I set the active test wallet address to the index 1
+```
+:::
+
+### :rocket: When I fetch the wallet address at index {index} {#fetch-wallet-index}
+- **Purpose**
+To fetch the wallet address from the provided index without setting it as the active wallet.
+
+- **Required Values:**
+    - `index`: The index of the wallet address in the test client list.
+
+::: details **Example**
+```gherkin
+When I fetch the wallet address at index 2
 ```
 :::
 
