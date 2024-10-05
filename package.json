@@ -41,8 +41,6 @@
     }
   },
   "scripts": {
-    "start": "ts-node src/internal/cli/index.ts",
-    "build:local": "pnpm typecheck && pnpm build && pnpm link --global",
     "build": "pnpm clean && tsup --config tsup.config.ts && tsc --emitDeclarationOnly",
     "clean": "rimraf dist",
     "changeset:version": "changeset version",
