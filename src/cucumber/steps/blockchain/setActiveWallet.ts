@@ -50,6 +50,10 @@ export const setActiveWalletByIndexStep = async (index: number) => {
 
 export const fetchWalletByIndexStep = async (index: number) => {
   const testWallet = await getTestWalletAddress({ index });
+  if(!world.chukti){
+    world.chukti ={};
+  }
+  world.chukti.lastResult = testWallet;
 
   // Log the fetched wallet without setting it as active
   world.log(`Fetched wallet address at index ${index}: ${testWallet}`);
