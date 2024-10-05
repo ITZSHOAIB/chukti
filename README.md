@@ -23,11 +23,11 @@ Chukti supports both `Hardhat + Viem` and `Forge + Anvil` project setups. You ca
 
 ## Contributing 🤝
 
-We welcome contributions from the community! If you have any ideas or suggestions, please open an issue or a pull request.
+We welcome contributions from the community! If you have any ideas or suggestions, please open an issue or a pull request. Please see the [CONTRIBUTING.md](.github/CONTRIBUTING.md) file for detailed guidelines on how to contribute.
 
 ## License 📜
 
-Chukti is licensed under the MIT License. If you have any suggestions, bug reports, or feature requests, feel free to open an issue or submit a pull request. Your feedback is always welcome!
+Chukti is licensed under the MIT License. See the [LICENSE file](/LICENSE) for details.
 
 ## Acknowledgements
 
