@@ -1,5 +1,11 @@
 # chukti
 
+## 0.1.0
+
+### Minor Changes
+
+- [#48](https://github.com/ITZSHOAIB/chukti/pull/48) [`e259360`](https://github.com/ITZSHOAIB/chukti/commit/e25936026ab9c6cc0d01ea1d6b375026116be907) Thanks [@varunpareek690](https://github.com/varunpareek690)! - feat: new feature added for fetching test wallet address
+
 ## 0.0.13
 
 ### Patch Changes
