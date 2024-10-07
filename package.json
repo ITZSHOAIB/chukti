@@ -11,37 +11,21 @@
     "access": "public"
   },
   "type": "module",
-  "bin": {
-    "chukti": "dist/internal/cli/index.js"
-  },
   "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "types": "dist/types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./cucumber": {
-      "types": "./dist/cucumber/index.d.ts",
-      "import": "./dist/cucumber/index.js",
-      "require": "./dist/cucumber/index.cjs"
-    },
-    "./local-blockchain": {
-      "types": "./dist/local-blockchain/index.d.ts",
-      "import": "./dist/local-blockchain/index.js",
-      "require": "./dist/local-blockchain/index.cjs"
-    },
-    "./viem": {
-      "types": "./dist/viem/index.d.ts",
-      "import": "./dist/viem/index.js",
-      "require": "./dist/viem/index.cjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/types/index.d.ts"
     }
   },
+  "bin": {
+    "chukti": "dist/cli.mjs"
+  },
   "scripts": {
-    "build": "pnpm clean && tsup --config tsup.config.ts && tsc --emitDeclarationOnly",
+    "build": "pnpm clean && rollup -c --bundleConfigAsCjs",
     "clean": "rimraf dist",
     "changeset:version": "changeset version",
     "changeset:publish": "pnpm build && changeset publish",
@@ -55,32 +39,44 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.7.0",
-    "@cucumber/cucumber": "^11.0.0",
+    "@cucumber/cucumber": "^11.0.1",
     "command-exists": "^1.2.9",
     "cross-spawn": "^7.0.3",
     "fs-extra": "^11.2.0",
     "picocolors": "^1.1.0",
     "tree-kill": "^1.2.2",
-    "ts-node": "^10.9.2",
-    "viem": "^2.21.2",
+    "viem": "^2.21.19",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.3",
     "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.8",
+    "@changesets/cli": "^2.27.9",
+    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.0",
     "@types/command-exists": "^1.2.3",
     "@types/cross-spawn": "^6.0.6",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.7.4",
-    "@types/yargs": "^17.0.24",
-    "glob": "^11.0.0",
+    "@types/yargs": "^17.0.33",
     "rimraf": "^6.0.1",
+    "rollup": "^4.24.0",
     "simple-git-hooks": "^2.11.1",
+    "ts-node": "^10.9.2",
     "tslib": "^2.7.0",
-    "tsup": "^8.2.4",
-    "typescript": "^5.1.6",
-    "vitepress": "^1.3.4"
+    "typescript": "^5.6.2",
+    "vitepress": "^1.4.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.4"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
   },
   "files": ["dist", "sample-projects", "src"],
   "keywords": [
