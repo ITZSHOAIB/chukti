@@ -78,11 +78,7 @@
       "optional": true
     }
   },
-  "files": [
-    "dist",
-    "sample-projects",
-    "src"
-  ],
+  "files": ["dist", "sample-projects", "src"],
   "keywords": [
     "Smart contract test",
     "Smart contract test cucumber",
