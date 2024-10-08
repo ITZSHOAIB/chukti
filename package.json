@@ -90,7 +90,7 @@
     "Hardhat cucumber"
   ],
   "lint-staged": {
-    "*.{js,ts}": ["pnpm lint"]
+    "*": ["pnpm lint"]
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
