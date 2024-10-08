@@ -1,6 +1,6 @@
 {
   "name": "chukti",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A library designed to simplify the smart contracts testing using human-readable syntax",
   "author": "Sohab Sk",
   "license": "MIT",
@@ -78,7 +78,11 @@
       "optional": true
     }
   },
-  "files": ["dist", "sample-projects", "src"],
+  "files": [
+    "dist",
+    "sample-projects",
+    "src"
+  ],
   "keywords": [
     "Smart contract test",
     "Smart contract test cucumber",

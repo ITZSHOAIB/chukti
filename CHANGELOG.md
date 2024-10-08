@@ -1,5 +1,11 @@
 # chukti
 
+## 0.1.1
+
+### Patch Changes
+
+- [#65](https://github.com/ITZSHOAIB/chukti/pull/65) [`04dd2a7`](https://github.com/ITZSHOAIB/chukti/commit/04dd2a7a69005e15834cc52feaf36382dee5d125) Thanks [@ITZSHOAIB](https://github.com/ITZSHOAIB)! - replacing tsup with rollup and terser for smaller size
+
 ## 0.1.0
 
 ### Minor Changes
