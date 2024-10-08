@@ -32,6 +32,7 @@
     "typecheck": "tsc --noEmit",
     "format": "biome format --write",
     "lint": "biome check --fix",
+    "lint-staged": "lint-staged",
     "prepare": "npx simple-git-hooks",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -62,6 +63,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.7.4",
     "@types/yargs": "^17.0.33",
+    "lint-staged": "^15.2.10",
     "rimraf": "^6.0.1",
     "rollup": "^4.24.0",
     "simple-git-hooks": "^2.11.1",
@@ -87,8 +89,11 @@
     "Smart contract cucumber",
     "Hardhat cucumber"
   ],
+  "lint-staged": {
+    "*.{js,ts}": ["pnpm lint", "git add"]
+  },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint"
+    "pre-commit": "pnpm lint-staged"
   },
   "packageManager": "pnpm@9.12.0",
   "engines": {
