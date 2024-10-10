@@ -36,6 +36,17 @@ When I call the write function "functionName" from the contract with arguments "
 ```
 [Read details](#write-contract-1)
 
+- ### Error Handling for Contract Deployment
+```gherkin
+When I attempt to deploy the smart contract with invalid arguments
+```
+[Read details](#error-contractDeploy-1)
+
+```gherkin
+Then I should see an error message "expectedErrorMessage"
+```
+[Read details](#error-message-1)
+
 ## Detailed Step Definitions
 
 ### :rocket: Given I have a smart contract located at "path/to/contract.sol" {#initialize-1}
@@ -111,6 +122,35 @@ To call a state-changing (write) function on the contract with specified argumen
 When I call the write function "transfer" from the contract with arguments "['Bob',50]" and send "1" Ether
 ```
 :::
+
+### :rocket: When I attempt to deploy the smart contract with invalid arguments {#error-contractDeploy-1}
+
+- **Purpose:**
+To simulate an invalid contract deployment scenario.
+
+- **Required Values:**
+    - None.
+
+::: details **Example:**
+```gherkin
+When I attempt to deploy the smart contract with invalid arguments
+```
+:::
+
+### :rocket: Then I should see an error message "expectedErrorMessage" {#error-message-1}
+
+- **Purpose:**
+To validate that the correct error message is displayed after an invalid operation.
+
+- **Required Values:**
+    - ```expectedErrorMessage``` : The error message expected to be displayed.
+
+::: details **Example:**
+```gherkin
+Then I should see an error message "Invalid constructor arguments"
+```
+:::
+
 
 ::: tip :bulb: Tip
 Wanna learn how to write test using these step definitions? Visit [How To Write Test page](/guide/how-to-write-test).
