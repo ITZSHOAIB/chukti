@@ -29,7 +29,7 @@
 
     "declaration": true,
     "declarationMap": true,
-    "declarationDir": "./dist/types"
+    "declarationDir": "./dist"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
