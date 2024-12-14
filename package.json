@@ -39,7 +39,7 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
-    "@clack/prompts": "^0.7.0",
+    "@clack/prompts": "^0.8.2",
     "@cucumber/cucumber": "^11.0.1",
     "command-exists": "^1.2.9",
     "cross-spawn": "^7.0.3",
